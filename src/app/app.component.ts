@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'weatherApp-V1';
+  yesterday!: string;
 
   api_key: string = 'cce16babc3924c04bcb130127230703';
   coordinates: string = 'Berlin';
@@ -15,10 +16,10 @@ export class AppComponent implements OnInit {
   forecastDays: number = 4;
 
   testApiCallForecast: string = `https://api.weatherapi.com/v1/forecast.json?key=cce16babc3924c04bcb130127230703&q=Berlin&days=${this.forecastDays}&aqi=no&alerts=no`;
-  testApiCallHistoryForForecast: string =
-    'https://api.weatherapi.com/v1/history.json?key=cce16babc3924c04bcb130127230703&q=Berlin&dt=2023-03-07';
+  testApiCallHistoryForForecast: string = `https://api.weatherapi.com/v1/history.json?key=cce16babc3924c04bcb130127230703&q=${this.coordinates}&dt=2023-03-07`;
 
   openMenu: boolean = false;
+  dayOfMonth: string = '0' + new Date().getDate().toString();
 
   currentData: any;
   currentLocation: any;
@@ -28,6 +29,7 @@ export class AppComponent implements OnInit {
   overview: any = {
     conditionIcon: '',
     conditionText: '',
+    day: '',
     currentTime: '',
     temp_c: 0,
     feelslike_c: 0,
@@ -35,16 +37,27 @@ export class AppComponent implements OnInit {
 
   info: any = {
     wind_kph: 0,
+    daily_chance_of_rain: 0,
     uvIndex: 0,
     wind_dir: '',
   };
 
   forecastArray: any[] = [];
 
+  constructor() {}
+
   ngOnInit() {
+    let test = new Date();
+    this.yesterday =
+      test.getFullYear() +
+      '-0' +
+      (test.getUTCMonth() + 1) +
+      '-0' +
+      (test.getDate() - 1);
+    this.testApiCallHistoryForForecast = `https://api.weatherapi.com/v1/history.json?key=cce16babc3924c04bcb130127230703&q=${this.coordinates}&dt=${this.yesterday}`;
     this.getPosition();
-    this.loadWeatherApi();
     this.loadforecastapi2();
+    // this.loadWeatherApi();
   }
 
   async loadforecastapi2() {
@@ -52,10 +65,19 @@ export class AppComponent implements OnInit {
     let responseJSON = await response.json();
     let history = responseJSON.forecast.forecastday[0];
 
-    console.log(responseJSON);
+    var a = new Date(history.date);
+    var weekdays = new Array(7);
+    weekdays[0] = 'Sunday';
+    weekdays[1] = 'Monday';
+    weekdays[2] = 'Tuesday';
+    weekdays[3] = 'Wednesday';
+    weekdays[4] = 'Thursday';
+    weekdays[5] = 'Friday';
+    weekdays[6] = 'Saturday';
+    var r = weekdays[a.getDay()].slice(0, 2);
 
     let forecast: any = {
-      day: '#',
+      day: r,
       date: this.setCurrentTime(history.date.split(' '), true),
       conditionIcon: history.day.condition.icon,
       maxTemp_c: history.day.maxtemp_c,
@@ -72,18 +94,35 @@ export class AppComponent implements OnInit {
     let responseJSON = await response.json();
 
     responseJSON.forecast.forecastday.forEach((currentDay: any) => {
+      var a = new Date(currentDay.date);
+      var weekdays = new Array(7);
+      weekdays[0] = 'Sunday';
+      weekdays[1] = 'Monday';
+      weekdays[2] = 'Tuesday';
+      weekdays[3] = 'Wednesday';
+      weekdays[4] = 'Thursday';
+      weekdays[5] = 'Friday';
+      weekdays[6] = 'Saturday';
+      var r = weekdays[a.getDay()].slice(0, 2);
+
       let forecast: any = {
-        day: '#',
+        day: r,
         date: this.setCurrentTime(currentDay.date.split(' '), true),
         conditionIcon: currentDay.day.condition.icon,
         maxTemp_c: currentDay.day.maxtemp_c,
         chanceOfRain: currentDay.day.daily_chance_of_rain,
       };
 
+      let dateOfDay = this.setCurrentTime(
+        currentDay.date.split(' '),
+        true
+      ).split('.')[0];
+
+      if (dateOfDay == this.dayOfMonth)
+        this.info.daily_chance_of_rain = currentDay.day.daily_chance_of_rain;
+
       this.forecastArray.push(forecast);
     });
-
-    console.log(this.forecastArray);
   }
 
   getPosition(): Promise<any> {
@@ -133,6 +172,18 @@ export class AppComponent implements OnInit {
     this.info.wind_kph = this.currentData.wind_kph;
     this.info.uvIndex = this.currentData.uv;
     this.info.wind_dir = this.currentData.wind_dir;
+
+    var a = new Date();
+    var weekdays = new Array(7);
+    weekdays[0] = 'Sunday';
+    weekdays[1] = 'Monday';
+    weekdays[2] = 'Tuesday';
+    weekdays[3] = 'Wednesday';
+    weekdays[4] = 'Thursday';
+    weekdays[5] = 'Friday';
+    weekdays[6] = 'Saturday';
+    var r = weekdays[a.getDay()];
+    this.overview.day = r;
 
     this.overview.currentTime = this.setCurrentTime(
       this.currentLocation.localtime.split(' ')

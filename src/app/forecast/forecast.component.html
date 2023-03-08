@@ -5,6 +5,6 @@
         <p>{{ day.date }}</p>
         <img src="{{ day.conditionIcon }}">
         <p>{{ day.maxTemp_c }}&#176;</p>
-        <p>{{ day.chanceOfRain }}&#37;</p>
+        <p *ngIf="day.chanceOfRain != undefined">{{ day.chanceOfRain }}&#37;</p>
     </div>
 </div>

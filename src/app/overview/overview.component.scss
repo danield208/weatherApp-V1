@@ -8,9 +8,20 @@ img {
 
 .appOverview-dateAndText {
   position: absolute;
-  bottom: 16px;
-  left: 12px;
+  bottom: 10px;
+  left: 10px;
   text-align: center;
+
+  p:nth-child(1) {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  p:nth-child(2) {
+    font-size: 14px;
+  }
+  p:nth-child(3) {
+    font-size: 16px;
+  }
 }
 
 .appOverview-temperature {
