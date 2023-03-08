@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: GolosText;
+  src: url(fonts/GolosText-Regular.ttf);
+}
+
+* {
+  font-family: GolosText;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: white;
+}
+
+body {
+  background-color: rgb(40, 40, 40);
+}
+
+h2 {
+  font-size: 18px;
+  padding: 3px 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgb(114, 54, 182);
+  border-radius: 15px;
+}
+
+h4 {
+  margin: 8px;
+}
+
+hr {
+  margin-bottom: 8px;
+}

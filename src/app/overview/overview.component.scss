@@ -1,0 +1,25 @@
+img {
+  position: absolute;
+  top: -35px;
+  left: 28px;
+  width: 100px;
+  height: 100px;
+}
+
+.appOverview-dateAndText {
+  position: absolute;
+  bottom: 16px;
+  left: 12px;
+  text-align: center;
+}
+
+.appOverview-temperature {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  right: 12px;
+
+  p:nth-child(1) {
+    font-size: 48px;
+  }
+}

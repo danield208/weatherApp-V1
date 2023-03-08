@@ -1,0 +1,51 @@
+$componentsBackgroundImageColor: linear-gradient(
+  to right bottom,
+  #d863e6,
+  #be63ea,
+  #a163ee,
+  #7e64f0,
+  #5164f0
+);
+
+.appForecast-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .appForecast-day {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &:nth-child(2) {
+      background-image: $componentsBackgroundImageColor;
+      border-radius: 10px;
+      padding: 4px 2px;
+    }
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+
+    p:nth-child(1) {
+      font-size: 18px;
+    }
+
+    p:nth-child(2) {
+      font-size: 16px;
+    }
+
+    p:nth-child(4) {
+      font-size: 22px;
+    }
+
+    p:nth-child(5) {
+      font-size: 14px;
+      padding: 1px 4px;
+      border-radius: 5px;
+      background-color: rgb(41, 112, 144);
+    }
+  }
+}
