@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
 	providedIn: "root",
@@ -22,20 +22,33 @@ export class WeatherAPIService {
 	};
 
 	// Forecast Info
-	forecast_Days: number = 4;
+	forecast_Days: number = 3;
 	forecastAlerts: string = "&alerts=no";
 
 	locationData: any = [];
 	savedCitiesData: any = [];
 
 	// booleans for init
-	locationLoaded!: Observable<boolean>;
+	apiLoadFinished!: BehaviorSubject<boolean>;
 
-	constructor(private http: HttpClient) {}
+	yesterday!: any;
+
+	constructor(private http: HttpClient) {
+		this.apiLoadFinished = new BehaviorSubject<boolean>(false);
+		this.getYesterday();
+	}
+
+	getYesterday() {
+		let current = new Date();
+		let yesterday = new Date(current.getTime());
+		yesterday.setDate(current.getDate() - 1);
+		let year = String(yesterday.getFullYear());
+		let month = ("0" + (yesterday.getUTCMonth() + 1)).slice(-2);
+		let day = String(yesterday.getDate());
+		this.yesterday = year + "-" + month + "-" + day;
+	}
 
 	getData(location: string): Observable<any> {
-		console.log("step2");
-		// console.log(location);
 		return this.http.get(
 			this.baseURL +
 				"/forecast.json" +
@@ -48,18 +61,4 @@ export class WeatherAPIService {
 				"&aqi=no&alerts=no"
 		);
 	}
-
-	// getForecast(location: string) {
-	// 	let res = this.http.get(
-	// 		this.baseURL +
-	// 			"/forecast.json" +
-	// 			this.API_Key +
-	// 			"&q=" +
-	// 			location +
-	// 			"&days=" +
-	// 			this.forecast_Days +
-	// 			this.languages.de +
-	// 			"&aqi=no&alerts=no"
-	// 	);
-	// }
 }

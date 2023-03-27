@@ -1,16 +1,23 @@
-import { Component } from "@angular/core";
+import { Component, Output } from "@angular/core";
+import { APIDataService } from "../_service/api-data.service";
+import { WeatherAPIService } from "../_service/weather-api.service";
 
 @Component({
 	selector: "app-weather-details",
-	templateUrl: "./weather-details.component.html",
+	template: `
+		<content>
+			<header routerLink="/home">
+				<img src="./assets/images/platzhalter.png" />
+				<h2>{{ locationName }}</h2>
+			</header>
+			<app-overview [overview]="overviewdata" class="content-padding"></app-overview>
+			<app-info [info]="infodata" class="content-padding"></app-info>
+			<!-- <app-forecast [forecast]="forecastArray" class="content-padding"></app-forecast> -->
+		</content>
+	`,
 	styleUrls: ["./weather-details.component.scss"],
 })
 export class WeatherDetailsComponent {
-	title = "Wetter";
-
-	coordinates!: any;
-
-	openMenu: boolean = false;
 	dayOfMonth: string = ("0" + new Date().getDate().toString()).slice(-2);
 
 	currentData: any;
@@ -18,7 +25,7 @@ export class WeatherDetailsComponent {
 
 	locationName!: string;
 
-	overview: any = {
+	@Output() overviewdata: any = {
 		conditionIcon: "",
 		conditionText: "",
 		day: "",
@@ -27,31 +34,65 @@ export class WeatherDetailsComponent {
 		feelslike_c: 0,
 	};
 
-	info: any = {
+	@Output() infodata: any = {
 		wind_kph: 0,
 		daily_chance_of_rain: 0,
 		uvIndex: 0,
 		wind_dir: "",
 	};
 
-	yesterday!: any;
+	// ##################################################################################
+	// ##################################################################################
+	// ##################################################################################
 
-	test!: any;
+	loadedData: any = {
+		current: {},
+		forecastday: {},
+		location: {},
+	};
 
-	constructor() {}
+	checkAPILoad = this.api.apiLoadFinished.subscribe((status) => {
+		if (status) {
+			this.setData();
+		}
+	});
 
-	ngOnInit(): void {
-		this.getYesterday();
+	constructor(private api: WeatherAPIService, private data: APIDataService) {}
+
+	setData() {
+		this.setValues(this.data);
 	}
 
-	getYesterday() {
-		let current = new Date();
-		let yesterday = new Date(current.getTime());
-		yesterday.setDate(current.getDate() - 1);
-		let year = String(yesterday.getFullYear());
-		let month = ("0" + (yesterday.getUTCMonth() + 1)).slice(-2);
-		let day = String(yesterday.getDate());
-		this.yesterday = year + "-" + month + "-" + day;
+	setValues(data: any) {
+		// this.locationName = this.data.location;
+		this.locationName = data.location.location.name;
+		this.overviewdata.conditionIcon = data.location.current.condition.icon;
+		this.overviewdata.conditionText = data.location.current.condition.text;
+		this.overviewdata.temp_c = data.location.current.temp_c;
+		this.overviewdata.feelslike_c = data.location.current.feelslike_c;
+		this.infodata.wind_kph = data.location.current.wind_kph;
+		this.infodata.uvIndex = data.location.current.uv;
+		this.infodata.wind_dir = data.location.current.wind_dir;
+
+		var a = new Date();
+		var weekdays = new Array(7);
+		weekdays[0] = "Sunday";
+		weekdays[1] = "Monday";
+		weekdays[2] = "Tuesday";
+		weekdays[3] = "Wednesday";
+		weekdays[4] = "Thursday";
+		weekdays[5] = "Friday";
+		weekdays[6] = "Saturday";
+		var r = weekdays[a.getDay()];
+		this.overviewdata.day = r;
+
+		this.overviewdata.currentTime = this.setCurrentTime(data.location.location.localtime.split(" ")[0]);
+	}
+
+	setCurrentTime(data: string, forForecast: boolean = false) {
+		let date = data.split("-");
+		if (forForecast) return date[2] + "." + date[1];
+		else return date[2] + "." + date[1] + "." + date[0];
 	}
 
 	// getPosition(): Promise<any> {
@@ -134,46 +175,5 @@ export class WeatherDetailsComponent {
 	// setApiCall() {
 	// 	this.api_call = `https://api.weatherapi.com/v1/current.json?key=${this.api_key}&q=${this.coordinates}&aqi=no`;
 	// 	this.loadWeatherApi();
-	// }
-
-	// async loadWeatherApi() {
-	// 	let response = await fetch(this.api_call);
-	// 	let responseJSON = await response.json();
-	// 	this.currentData = responseJSON.current;
-	// 	this.currentLocation = responseJSON.location;
-	// 	this.setValues();
-	// }
-
-	// setValues() {
-	// 	this.locationName = this.currentLocation.name;
-	// 	this.overview.conditionIcon = this.currentData.condition.icon;
-	// 	this.overview.conditionText = this.currentData.condition.text;
-	// 	this.overview.temp_c = this.currentData.temp_c;
-	// 	this.overview.feelslike_c = this.currentData.feelslike_c;
-	// 	this.info.wind_kph = this.currentData.wind_kph;
-	// 	this.info.uvIndex = this.currentData.uv;
-	// 	this.info.wind_dir = this.currentData.wind_dir;
-
-	// 	var a = new Date();
-	// 	var weekdays = new Array(7);
-	// 	weekdays[0] = "Sunday";
-	// 	weekdays[1] = "Monday";
-	// 	weekdays[2] = "Tuesday";
-	// 	weekdays[3] = "Wednesday";
-	// 	weekdays[4] = "Thursday";
-	// 	weekdays[5] = "Friday";
-	// 	weekdays[6] = "Saturday";
-	// 	var r = weekdays[a.getDay()];
-	// 	this.overview.day = r;
-
-	// 	this.overview.currentTime = this.setCurrentTime(this.currentLocation.localtime.split(" "));
-	// }
-
-	// setCurrentTime(data: any, forForecast: boolean = false) {
-	// 	let date = data;
-	// 	date = date[0].split("-");
-	// 	if (forForecast) return date[2] + "." + date[1];
-	// 	else return date[2] + "." + date[1] + "." + date[0];
-	// 	// this.overview.currentTime = date[2] + '.' + date[1] + '.' + date[0];
 	// }
 }

@@ -1,3 +1,7 @@
 export class APIDataService {
-	currentLocation: any;
+	location = {
+		current: {},
+		forecastday: {},
+		location: {},
+	};
 }

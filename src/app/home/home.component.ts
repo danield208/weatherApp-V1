@@ -1,11 +1,11 @@
-import { Component, Output } from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
 	selector: "app-home",
 	template: `
 		<span>Menu</span>
 		<h1>Wetter</h1>
-		<app-location></app-location>
+		<app-location routerLink="/location"></app-location>
 		<hr />
 		<input placeholder="Ort Hinzufügen" />
 		<content>

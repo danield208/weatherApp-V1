@@ -26,30 +26,22 @@ export class LocationComponent implements OnInit {
 	forecastday: any;
 	location: any;
 
+	checkAPILoad = this.api.apiLoadFinished.subscribe((status) => {
+		if (status) {
+			this.setData();
+		}
+	});
+
 	apiLoaded: boolean = false;
 
 	constructor(private api: WeatherAPIService, private geo: GeolocationService, public data: APIDataService) {}
 
-	ngOnInit(): void {
-		this.geo.loactionLoaded.subscribe((status) => {
-			if (status) {
-				this.getData();
-			}
-		});
-	}
+	ngOnInit(): void {}
 
-	getData() {
-		this.getCurrentData();
-	}
-
-	getCurrentData() {
-		this.api.getData(this.geo.coordinates).subscribe((data) => {
-			this.data.currentLocation = data;
-			console.log(data);
-			this.current = data.current;
-			this.forecastday = data.forecast.forecastday;
-			this.location = data.location;
-			this.apiLoaded = true;
-		});
+	setData() {
+		this.current = this.data.location.current;
+		this.forecastday = this.data.location.forecastday;
+		this.location = this.data.location.location;
+		this.apiLoaded = true;
 	}
 }
