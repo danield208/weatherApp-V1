@@ -1,0 +1,44 @@
+$menuBorderRadius: 20px;
+$componentsBackgroundImageColor: linear-gradient(to right bottom, #d863e6, #be63ea, #a163ee, #7e64f0, #5164f0);
+$componentBorderRadius: 24px;
+
+content {
+	position: relative;
+	height: 100dvh;
+	width: 100dvw;
+	overflow: hidden;
+	padding: 10px 30px;
+
+	display: flex;
+	flex-direction: column;
+	gap: 5%;
+	align-items: center;
+
+	.content-padding {
+		padding: 5px;
+	}
+
+	header {
+		display: flex;
+		height: 5%;
+		justify-content: center;
+		align-items: center;
+
+		img {
+			height: 22px;
+			width: 22px;
+			margin-left: -22px;
+		}
+
+		h2 {
+			height: 100%;
+			font-size: 18px;
+			padding: 3px 9px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			border-radius: 15px;
+		}
+	}
+}

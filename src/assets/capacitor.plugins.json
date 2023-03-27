@@ -1,0 +1,6 @@
+{
+	"appId": "weatherAPI",
+	"appName": "weatherAPI",
+	"bundleWebRuntime": false,
+	"webDir": "dist"
+}

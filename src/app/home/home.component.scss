@@ -1,0 +1,40 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+
+	padding: 10px 28px;
+}
+
+span {
+	width: 100%;
+	text-align: end;
+}
+
+h1 {
+	width: 100%;
+}
+
+hr {
+	width: 100%;
+}
+
+input {
+	width: 100%;
+}
+
+content {
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	p {
+		width: 100%;
+		margin-bottom: 12px;
+	}
+}
