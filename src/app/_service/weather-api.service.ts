@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
+import { GeolocationService } from "./geolocation.service";
+import { APIDataService } from "./api-data.service";
 
 @Injectable({
 	providedIn: "root",
@@ -25,19 +27,29 @@ export class WeatherAPIService {
 	forecast_Days: number = 3;
 	forecastAlerts: string = "&alerts=no";
 
-	locationData: any = [];
-	savedCitiesData: any = [];
+	// Hystorie
+	yesterday!: any;
 
 	// booleans for init
 	apiLoadFinished!: BehaviorSubject<boolean>;
 
-	yesterday!: any;
+	runningTasks: Array<any> = [];
 
-	constructor(private http: HttpClient) {
+	// dataModel for location data
+	dataModel = {
+		coords: "",
+		current: {},
+		forecastday: {},
+		location: {},
+		yesterday: {},
+	};
+
+	constructor(private http: HttpClient, private geo: GeolocationService, private data: APIDataService) {
 		this.apiLoadFinished = new BehaviorSubject<boolean>(false);
 		this.getYesterday();
 	}
 
+	// main functions
 	getYesterday() {
 		let current = new Date();
 		let yesterday = new Date(current.getTime());
@@ -48,17 +60,77 @@ export class WeatherAPIService {
 		this.yesterday = year + "-" + month + "-" + day;
 	}
 
-	getData(location: string): Observable<any> {
-		return this.http.get(
-			this.baseURL +
-				"/forecast.json" +
-				this.API_Key +
-				"&q=" +
-				location +
-				"&days=" +
-				this.forecast_Days +
-				this.languages.de +
-				"&aqi=no&alerts=no"
+	getData(location: string, type: string = "forecast", yesterday: string = "#"): Observable<any> {
+		if (type == "history") {
+			return this.http.get(
+				this.baseURL +
+					("/" + type + ".json") +
+					this.API_Key +
+					("&q=" + location) +
+					this.languages.de +
+					("&dt=" + yesterday)
+			);
+		} else {
+			return this.http.get(
+				this.baseURL +
+					("/" + type + ".json") +
+					this.API_Key +
+					("&q=" + location) +
+					("&days=" + this.forecast_Days) +
+					this.languages.de +
+					"&aqi=no&alerts=no"
+			);
+		}
+	}
+
+	// called functions
+	getLocationData() {
+		this.getData(this.geo.coordinates).subscribe((data) => {
+			this.dataModel.coords = data.location.lat + "," + data.location.lon;
+			this.dataModel.current = data.current;
+			this.dataModel.forecastday = data.forecast.forecastday;
+			this.dataModel.location = data.location;
+			this.getLocationYesterday();
+		});
+	}
+
+	getLocationYesterday() {
+		if (this.data.userCities.length > 0) {
+			this.getData(this.geo.coordinates, "history", this.yesterday).subscribe((data) => {
+				this.dataModel.yesterday = data;
+				this.data.locationData = this.dataModel;
+				console.log(this.data.locationData);
+				this.getSavedCities();
+			});
+		} else {
+			this.apiLoadFinished.next(true);
+		}
+	}
+
+	getSavedCities() {
+		this.data.userCities.forEach((city) => {
+			this.runningTasks.push(
+				this.getData(city).subscribe((data) => {
+					let coords = data.location.lat + "," + data.location.lon;
+					this.getSavedCitiesYesterday(coords, data, city);
+				})
+			);
+		});
+	}
+
+	getSavedCitiesYesterday(coords: string, dataForecast: any, city: string) {
+		this.runningTasks.push(
+			this.getData(city, "history", this.yesterday).subscribe((dataYesterday) => {
+				const dataModel = {
+					coords: coords,
+					current: dataForecast.current,
+					forecastday: dataForecast.forecast.forecastday,
+					location: dataForecast.location,
+					yesterday: dataYesterday,
+				};
+				this.data.userCitiesData.push(dataModel);
+				if (this.data.userCities.length == this.data.userCitiesData.length) this.apiLoadFinished.next(true);
+			})
 		);
 	}
 }

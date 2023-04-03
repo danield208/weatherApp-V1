@@ -1,20 +1,29 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
 	selector: "app-city",
 	template: `
-		<div class="top">
+		<div class="top" (click)="showDetails()">
 			<div>
-				<span>Mannheim</span>
-				<span>13:20</span>
+				<span>{{ data.location.name }}</span>
+				<span>{{ data.location.localtime.split(" ")[1] }}</span>
 			</div>
-			<span>8&#176;</span>
+			<span>{{ data.current.temp_c }}&#176;</span>
 		</div>
-		<div class="bottom">
-			<span>Nieselregen</span>
-			<span>H: 10&#176; | T: 5&#176;</span>
+		<div class="bottom" (click)="showDetails()">
+			<span>{{ data.current.condition.text }}</span>
+			<span>H: {{ data.forecastday[0].day.maxtemp_c }}&#176; | T: {{ data.forecastday[0].day.mintemp_c }}&#176;</span>
 		</div>
 	`,
 	styleUrls: ["city&location.component.scss"],
 })
-export class CityComponent {}
+export class CityComponent {
+	@Input() data: any;
+
+	constructor(private router: Router) {}
+
+	showDetails() {
+		this.router.navigateByUrl("/details/" + this.data.location.lat + "," + this.data.location.lon);
+	}
+}

@@ -10,26 +10,33 @@ import { WeatherAPIService } from "./_service/weather-api.service";
 	providers: [GeolocationService, WeatherAPIService, APIDataService],
 })
 export class AppComponent {
-	location = this.geo.locations.subscribe((Response) => {
-		this.location.unsubscribe();
-		this.geo.locationLoaded.next(true);
-	});
+	location!: any;
+	checkLoadedLoc!: any;
 
-	checkLoadedLoc = this.geo.locationLoaded.subscribe((status) => {
-		if (status) {
-			this.getLocationData();
-		}
-	});
+	constructor(private geo: GeolocationService, private api: WeatherAPIService, private data: APIDataService) {
+		this.data.DataLoadedAndAuthenticated.subscribe((status) => {
+			console.log("init");
+			if (status) {
+				console.log(status);
+				this.initApp();
+			}
+		});
+	}
 
-	constructor(private geo: GeolocationService, private api: WeatherAPIService, private data: APIDataService) {}
+	initApp() {
+		this.location = this.geo.locations.subscribe((Response) => {
+			this.location.unsubscribe();
+		});
 
-	getLocationData() {
-		this.api.getData(this.geo.coordinates).subscribe((data) => {
-			this.data.location.current = data.current;
-			this.data.location.forecastday = data.forecast.forecastday;
-			this.data.location.location = data.location;
-			this.api.apiLoadFinished.next(true);
-			console.log(this.data.location);
+		this.checkLoadedLoc = this.geo.locationLoaded.subscribe((status) => {
+			if (status) {
+				console.log(this.geo.coordinates);
+				if (!this.geo.locationError) {
+					this.api.getLocationData();
+				} else if (this.data.userCities.length > 0) {
+					this.api.getSavedCities();
+				}
+			}
 		});
 	}
 }

@@ -23,7 +23,5 @@ export class OverviewComponent implements OnInit {
 
 	constructor(public data: APIDataService) {}
 
-	ngOnInit(): void {
-		console.log(this.overview);
-	}
+	ngOnInit(): void {}
 }
