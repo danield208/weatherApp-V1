@@ -41,16 +41,16 @@ label {
 .form-group {
 	width: 100%;
 	position: relative;
-}
 
-input {
-	background-color: rgba(0, 0, 0, 0.408);
-	height: 2rem;
-	width: 100%;
-	padding-left: 8px;
-	border: 1px solid white;
-	border-radius: 12px;
-	font-size: 1.2rem;
+	input {
+		background-color: rgba(0, 0, 0, 0.408);
+		height: 2rem;
+		width: 100%;
+		padding-left: 8px;
+		border: 1px solid white;
+		border-radius: 12px;
+		font-size: 1.2rem;
+	}
 }
 
 .alert {

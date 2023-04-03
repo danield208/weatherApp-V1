@@ -43,6 +43,10 @@ import { UserService } from "../_service/user.service";
 			</div>
 			<br />
 			<button type="submit">Login</button>
+			<div>
+				<span>Keep Login</span>
+				<input type="checkbox" [(ngModel)]="saveLogin" [ngModelOptions]="{ standalone: true }" />
+			</div>
 		</form>
 		<button class="close" (click)="closeWindow()">&#215;</button>
 	`,
@@ -52,12 +56,14 @@ export class LoginComponent {
 	emailV: string = "";
 	passwordV: string = "";
 	passwordPH: string = "";
+	saveLogin: boolean = false;
 
 	constructor(public user: UserService, private router: Router) {}
 
 	login(form: any) {
 		if (form.status == "VALID") {
-			this.user.login(form.value.email, form.value.password);
+			console.log(form);
+			this.user.login(form.value.email, form.value.password, this.saveLogin);
 		} else {
 			Object.entries(form.controls).forEach(([key, value]) => {
 				let data: any = value;

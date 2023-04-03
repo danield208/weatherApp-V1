@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
 import { GeolocationService } from "./geolocation.service";
@@ -7,7 +7,7 @@ import { APIDataService } from "./api-data.service";
 @Injectable({
 	providedIn: "root",
 })
-export class WeatherAPIService {
+export class WeatherAPIService implements OnInit {
 	baseURL = "https://api.weatherapi.com/v1";
 	API_Key = "?key=cce16babc3924c04bcb130127230703";
 	languages: any = {
@@ -48,6 +48,8 @@ export class WeatherAPIService {
 		this.apiLoadFinished = new BehaviorSubject<boolean>(false);
 		this.getYesterday();
 	}
+
+	ngOnInit(): void {}
 
 	// main functions
 	getYesterday() {
@@ -99,7 +101,6 @@ export class WeatherAPIService {
 			this.getData(this.geo.coordinates, "history", this.yesterday).subscribe((data) => {
 				this.dataModel.yesterday = data;
 				this.data.locationData = this.dataModel;
-				console.log(this.data.locationData);
 				this.getSavedCities();
 			});
 		} else {

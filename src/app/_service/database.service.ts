@@ -4,15 +4,14 @@ import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 import { APIDataService } from "./api-data.service";
 
+import { Observable, throwError } from "rxjs";
+import { catchError, retry } from "rxjs/operators";
+
 @Injectable({
 	providedIn: "root",
 })
 export class DatabaseService {
-	databasePutLoaded!: BehaviorSubject<boolean>;
-
-	constructor(private http: HttpClient, private data: APIDataService, private router: Router) {
-		this.databasePutLoaded = new BehaviorSubject<boolean>(false);
-	}
+	constructor(private http: HttpClient, private data: APIDataService, private router: Router) {}
 
 	put(userUID: string, token: string, UserObject: any) {
 		this.http
@@ -21,12 +20,12 @@ export class DatabaseService {
 				UserObject
 			)
 			.subscribe((res) => {
+				this.data.UserLoadedAndAuthenticated$.next(true);
 				console.log(res);
 				let result: any = res;
 				this.data.userEmail = result.email;
 				this.data.username = result.name;
 				this.data.userCities = result.savedcities;
-				this.data.DataLoadedAndAuthenticated.next(true);
 				this.router.navigateByUrl("/home");
 			});
 	}
@@ -35,12 +34,12 @@ export class DatabaseService {
 		this.http
 			.get(`https://weather-63e37-default-rtdb.europe-west1.firebasedatabase.app/users/${userUID}.json?auth=${token}`)
 			.subscribe((res) => {
+				this.data.UserLoadedAndAuthenticated$.next(true);
 				console.log(res);
 				let result: any = res;
 				this.data.userEmail = result.email;
 				this.data.username = result.name;
 				this.data.userCities = result.savedcities;
-				this.data.DataLoadedAndAuthenticated.next(true);
 				this.router.navigateByUrl("/home");
 			});
 	}
@@ -52,12 +51,12 @@ export class DatabaseService {
 				object
 			)
 			.subscribe((res) => {
+				this.data.UserLoadedAndAuthenticated$.next(true);
 				console.log(res);
 				let result: any = res;
 				this.data.userEmail = result.email;
 				this.data.username = result.name;
 				this.data.userCities = result.savedcities;
-				this.data.DataLoadedAndAuthenticated.next(true);
 				this.router.navigateByUrl("/home");
 			});
 	}

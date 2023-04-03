@@ -45,7 +45,15 @@ import { RouterAuthGuard } from "./_guard/router.guard";
 		LoginComponent,
 	],
 	imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
-	providers: [WeatherAPIService, GeolocationService, APIDataService, UserService, RouterAuthGuard, DatabaseService],
+	providers: [WeatherAPIService, GeolocationService, APIDataService, UserService, DatabaseService, RouterAuthGuard],
 	bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+	constructor(private database: DatabaseService) {
+		if (localStorage.getItem("user")) {
+			const localStorageString: any = localStorage.getItem("user");
+			const user = JSON.parse(localStorageString);
+			this.database.get(user.uid, user.token);
+		}
+	}
+}

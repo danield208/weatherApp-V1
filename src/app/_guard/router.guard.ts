@@ -9,7 +9,7 @@ import { APIDataService } from "../_service/api-data.service";
 export class RouterAuthGuard implements CanActivate {
 	constructor(private data: APIDataService, private router: Router) {}
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | any {
-		if (this.data.DataLoadedAndAuthenticated.value) return true;
+		if (this.data.UserLoadedAndAuthenticated$.value) return true;
 		else this.router.navigateByUrl("start");
 	}
 }

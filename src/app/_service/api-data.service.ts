@@ -11,7 +11,7 @@ export class APIDataService {
 	userCities: Array<string> = [];
 
 	// check if user data is loaded
-	DataLoadedAndAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
+	UserLoadedAndAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor() {}
 }

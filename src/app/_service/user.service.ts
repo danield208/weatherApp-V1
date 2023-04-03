@@ -4,6 +4,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { BehaviorSubject } from "rxjs";
 import { DatabaseService } from "./database.service";
+import { APIDataService } from "./api-data.service";
 
 @Injectable({
 	providedIn: "root",
@@ -30,7 +31,7 @@ export class UserService {
 
 	userInitCompleted: BehaviorSubject<boolean>;
 
-	constructor(private database: DatabaseService) {
+	constructor(private database: DatabaseService, private data: APIDataService) {
 		this.userInitCompleted = new BehaviorSubject<boolean>(false);
 	}
 
@@ -52,11 +53,13 @@ export class UserService {
 			});
 	}
 
-	login(email: string, password: string) {
+	login(email: string, password: string, saveLogin: any) {
 		signInWithEmailAndPassword(this.auth, email, password)
 			.then((userCredential) => {
 				const user = userCredential.user;
 				user.getIdToken().then((token) => {
+					const userString: string = JSON.stringify({ uid: user.uid, token: token });
+					if (saveLogin) localStorage.setItem("user", userString);
 					this.database.get(user.uid, token);
 				});
 			})

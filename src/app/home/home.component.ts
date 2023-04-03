@@ -1,8 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { APIDataService } from "../_service/api-data.service";
 import { UserService } from "../_service/user.service";
 import { WeatherAPIService } from "../_service/weather-api.service";
+import { GeolocationService } from "../_service/geolocation.service";
+import { BehaviorSubject } from "rxjs";
 
 @Component({
 	selector: "app-home",
@@ -19,21 +21,18 @@ import { WeatherAPIService } from "../_service/weather-api.service";
 	`,
 	styleUrls: ["./home.component.scss"],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 	apiLoaded!: boolean;
 	citiesData!: Array<any>;
-	checkUserLoad!: any;
 	checkAPILoad!: any;
 
-	constructor(
-		private api: WeatherAPIService,
-		public data: APIDataService,
-		private router: Router,
-		private user: UserService
-	) {
-		this.checkUserLoad = this.data.DataLoadedAndAuthenticated.subscribe((status) => {
-			if (status) this.initComponent();
-		});
+	location!: any;
+	checkLoadedLoc!: any;
+
+	constructor(private api: WeatherAPIService, private data: APIDataService) {}
+
+	ngOnInit(): void {
+		this.initComponent();
 	}
 
 	initComponent() {

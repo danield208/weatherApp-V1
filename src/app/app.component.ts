@@ -1,23 +1,23 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { APIDataService } from "./_service/api-data.service";
 import { GeolocationService } from "./_service/geolocation.service";
 import { WeatherAPIService } from "./_service/weather-api.service";
+import { BehaviorSubject } from "rxjs";
+import { DatabaseService } from "./_service/database.service";
+import { UserService } from "./_service/user.service";
 
 @Component({
 	selector: "app-root",
-	templateUrl: "./app.component.html",
-	styleUrls: ["./app.component.scss"],
-	providers: [GeolocationService, WeatherAPIService, APIDataService],
+	template: `<router-outlet></router-outlet>`,
+	styles: [],
 })
 export class AppComponent {
 	location!: any;
 	checkLoadedLoc!: any;
 
 	constructor(private geo: GeolocationService, private api: WeatherAPIService, private data: APIDataService) {
-		this.data.DataLoadedAndAuthenticated.subscribe((status) => {
-			console.log("init");
+		this.data.UserLoadedAndAuthenticated$.subscribe((status) => {
 			if (status) {
-				console.log(status);
 				this.initApp();
 			}
 		});
@@ -30,7 +30,6 @@ export class AppComponent {
 
 		this.checkLoadedLoc = this.geo.locationLoaded.subscribe((status) => {
 			if (status) {
-				console.log(this.geo.coordinates);
 				if (!this.geo.locationError) {
 					this.api.getLocationData();
 				} else if (this.data.userCities.length > 0) {
