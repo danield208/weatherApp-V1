@@ -1,0 +1,9 @@
+<content *ngIf="apiReady">
+    <header routerLink="/home">
+        <img src="./assets/images/platzhalter.png" />
+        <h2>{{ locationName }}</h2>
+    </header>
+    <app-overview [overview]="overviewdata" class="content-padding"></app-overview>
+    <app-info [info]="infodata" class="content-padding"></app-info>
+    <app-forecast [forecast]="forecastArray" class="content-padding"></app-forecast>
+</content>

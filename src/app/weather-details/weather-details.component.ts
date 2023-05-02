@@ -5,17 +5,7 @@ import { WeatherAPIService } from "../_service/weather-api.service";
 
 @Component({
 	selector: "app-weather-details",
-	template: `
-		<content *ngIf="apiReady">
-			<header routerLink="/home">
-				<img src="./assets/images/platzhalter.png" />
-				<h2>{{ locationName }}</h2>
-			</header>
-			<app-overview [overview]="overviewdata" class="content-padding"></app-overview>
-			<app-info [info]="infodata" class="content-padding"></app-info>
-			<app-forecast [forecast]="forecastArray" class="content-padding"></app-forecast>
-		</content>
-	`,
+	templateUrl: "./weather-details.component.html",
 	styleUrls: ["./weather-details.component.scss"],
 })
 export class WeatherDetailsComponent {

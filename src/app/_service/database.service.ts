@@ -44,7 +44,7 @@ export class DatabaseService {
 			});
 	}
 
-	patch(userUID: string, token: string, object: any) {
+	patch(userUID: string, token: string, object: { [key: string]: any }) {
 		this.http
 			.patch(
 				`https://weather-63e37-default-rtdb.europe-west1.firebasedatabase.app/users/${userUID}.json?auth=${token}`,

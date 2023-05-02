@@ -4,13 +4,7 @@
 	src: url(./assets/fonts/GolosText-Regular.ttf);
 }
 
-* {
-	font-family: GolosText;
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
-	color: white;
-}
+//	box-sizing: border-box;
 
 body {
 	background-color: rgb(40, 40, 40);
@@ -23,3 +17,6 @@ h4 {
 hr {
 	margin-bottom: 8px;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

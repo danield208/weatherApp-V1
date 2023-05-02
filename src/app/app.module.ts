@@ -25,35 +25,59 @@ import { WeatherDetailsComponent } from "./weather-details/weather-details.compo
 import { APIDataService } from "./_service/api-data.service";
 import { UserService } from "./_service/user.service";
 import { DatabaseService } from "./_service/database.service";
+import { ThemeService } from "./_service/theme.service";
+
+import { DesktopComponent } from "./desktop/desktop.component";
 
 // guards
 import { RouterAuthGuard } from "./_guard/router.guard";
 
+//material design
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { InfoSmallComponent } from './_components/info-small.component';
 @NgModule({
-	declarations: [
-		AppComponent,
-		OverviewComponent,
-		InfoComponent,
-		ForecastComponent,
-		ForecastDayComponent,
-		HomeComponent,
-		LocationComponent,
-		CityComponent,
-		WeatherDetailsComponent,
-		StartscreenComponent,
-		SignupComponent,
-		LoginComponent,
-	],
-	imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
-	providers: [WeatherAPIService, GeolocationService, APIDataService, UserService, DatabaseService, RouterAuthGuard],
-	bootstrap: [AppComponent],
+  declarations: [
+    AppComponent,
+    OverviewComponent,
+    InfoComponent,
+    ForecastComponent,
+    ForecastDayComponent,
+    HomeComponent,
+    LocationComponent,
+    CityComponent,
+    WeatherDetailsComponent,
+    StartscreenComponent,
+    SignupComponent,
+    LoginComponent,
+    DesktopComponent,
+    InfoSmallComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+
+    //material design
+    MatSidenavModule,
+    MatButtonModule,
+    MatCardModule,
+    MatProgressBarModule,
+  ],
+  providers: [
+    WeatherAPIService,
+    GeolocationService,
+    APIDataService,
+    UserService,
+    DatabaseService,
+    RouterAuthGuard,
+    ThemeService,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-	constructor(private database: DatabaseService) {
-		if (localStorage.getItem("user")) {
-			const localStorageString: any = localStorage.getItem("user");
-			const user = JSON.parse(localStorageString);
-			this.database.get(user.uid, user.token);
-		}
-	}
-}
+export class AppModule {}

@@ -1,17 +1,41 @@
 :host {
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 10px;
 	width: 100%;
-
-	padding: 10px 28px;
+	height: 100%;
 }
 
-span {
+mat-drawer-container {
 	width: 100%;
-	text-align: end;
+}
+
+mat-drawer {
+	height: 100%;
+	width: 300px;
+	padding: 20px;
+
+
+}
+
+@media (max-width: 324px) {
+	mat-drawer {
+		width: 100%;
+	}
+}
+
+.mat-drawer-conte nt {
+	  
+	.toggleBTN {
+
+		position: absolute;
+		left: 8px;
+		top: 8px;
+	}
+
+	.logoutBTN {
+		position: absolute;
+		right: 8px;
+		top: 8px;
+	}
 }
 
 h1 {
@@ -20,13 +44,17 @@ h1 {
 
 hr {
 	width: 100%;
+	border: unset;
 }
 
 input {
 	width: 100%;
+	border: unset;
+	padding: 0;
 }
 
 content {
+	margin-top: 12px;
 	position: relative;
 	width: 100%;
 	display: flex;
@@ -39,3 +67,6 @@ content {
 		margin-bottom: 12px;
 	}
 }
+
+
+

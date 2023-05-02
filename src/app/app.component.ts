@@ -1,41 +1,42 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { APIDataService } from "./_service/api-data.service";
 import { GeolocationService } from "./_service/geolocation.service";
 import { WeatherAPIService } from "./_service/weather-api.service";
-import { BehaviorSubject } from "rxjs";
-import { DatabaseService } from "./_service/database.service";
-import { UserService } from "./_service/user.service";
 
 @Component({
-	selector: "app-root",
-	template: `<router-outlet></router-outlet>`,
-	styles: [],
+  selector: "app-root",
+  template: `<router-outlet></router-outlet>`,
+  styles: [],
 })
 export class AppComponent {
-	location!: any;
-	checkLoadedLoc!: any;
+  location!: any;
+  checkLoadedLoc!: any;
 
-	constructor(private geo: GeolocationService, private api: WeatherAPIService, private data: APIDataService) {
-		this.data.UserLoadedAndAuthenticated$.subscribe((status) => {
-			if (status) {
-				this.initApp();
-			}
-		});
-	}
+  constructor(
+    private geo: GeolocationService,
+    private api: WeatherAPIService,
+    private data: APIDataService
+  ) {
+    this.data.UserLoadedAndAuthenticated$.subscribe((status) => {
+      if (status) {
+        this.initApp();
+      }
+    });
+  }
 
-	initApp() {
-		this.location = this.geo.locations.subscribe((Response) => {
-			this.location.unsubscribe();
-		});
+  initApp() {
+    this.location = this.geo.locations.subscribe(() => {
+      this.location.unsubscribe();
+    });
 
-		this.checkLoadedLoc = this.geo.locationLoaded.subscribe((status) => {
-			if (status) {
-				if (!this.geo.locationError) {
-					this.api.getLocationData();
-				} else if (this.data.userCities.length > 0) {
-					this.api.getSavedCities();
-				}
-			}
-		});
-	}
+    this.checkLoadedLoc = this.geo.locationLoaded.subscribe((status) => {
+      if (status) {
+        if (!this.geo.locationError) {
+          this.api.getLocationData();
+        } else if (this.data.userCities.length > 0) {
+          this.api.getSavedCities();
+        }
+      }
+    });
+  }
 }
