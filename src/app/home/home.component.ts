@@ -2,19 +2,25 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { APIDataService } from "../_service/api-data.service";
 import { WeatherAPIService } from "../_service/weather-api.service";
+import { GeolocationService } from "../_service/geolocation.service";
+import { UserService } from "../_service/user.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-home",
   template: `
-    <mat-drawer-container autosize>
+    <mat-drawer-container autosize *ngIf="userLoaded">
       <mat-drawer #drawer mode="side" opened>
-        <h1>Wetter</h1>
-        <app-location></app-location>
-        <hr />
-        <p>Gespeicherte Orte:</p>
-        <input placeholder="Ort Hinzufügen" />
-        <content *ngIf="apiLoaded">
-          <app-city *ngFor="let city of citiesData" [data]="city"></app-city>
+        <h1>Weather</h1>
+        <app-info-small
+          *ngIf="geoLoaded"
+          [location]="geo.coordinates"
+        ></app-info-small>
+        <br />
+        <p>Saved locations:</p>
+        <input placeholder="add location" />
+        <content>
+          <span>Saved cities</span>
         </content>
       </mat-drawer>
 
@@ -25,38 +31,41 @@ import { WeatherAPIService } from "../_service/weather-api.service";
         <button class="logoutBTN" mat-raised-button (click)="logout()">
           LogOut
         </button>
+        <router-outlet></router-outlet>
       </mat-drawer-content>
     </mat-drawer-container>
   `,
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
-  apiLoaded!: boolean;
-  citiesData!: Array<any>;
-  checkAPILoad!: any;
   location!: any;
   showSidenav: boolean = true;
+  userLoaded: boolean = false;
+  geoLoaded: boolean = false;
+  geoSubscription!: Subscription;
 
   constructor(
     private api: WeatherAPIService,
     private data: APIDataService,
-    private router: Router
+    private router: Router,
+    public geo: GeolocationService,
+    public user: UserService
   ) {}
 
   ngOnInit(): void {
-    this.initComponent();
     if (window.innerWidth < 1200) this.showSidenav = false;
-  }
 
-  initComponent() {
-    this.checkAPILoad = this.api.apiLoadFinished.subscribe((status) => {
-      if (status) {
-        this.citiesData = this.data.userCitiesData;
-        this.apiLoaded = true;
-      } else {
-        this.apiLoaded = false;
+    this.user.userInitCompleted.subscribe((resp: boolean): void => {
+      if (resp) {
+        this.userLoaded = true;
       }
     });
+
+    this.geoSubscription = this.geo.locationLoaded.subscribe(
+      (response: boolean): void => {
+        if (response) this.geoLoaded = true;
+      }
+    );
   }
 
   logout() {

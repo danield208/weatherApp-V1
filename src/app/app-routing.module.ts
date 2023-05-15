@@ -5,7 +5,7 @@ import { HomeComponent } from "./home/home.component";
 import { LoginComponent } from "./startscreen/login.component";
 import { SignupComponent } from "./startscreen/signup.component";
 import { StartscreenComponent } from "./startscreen/startscreen.component";
-// import { WeatherDetailsComponent } from "./weather-details/weather-details.component";
+import { InfoscreenComponent } from "./_components/infoscreen/infoscreen.component";
 
 const routes: Routes = [
   {
@@ -21,10 +21,12 @@ const routes: Routes = [
       { path: "login", component: LoginComponent },
     ],
   },
-  { path: "home", component: HomeComponent, canActivate: [RouterAuthGuard] },
-  // { path: "details/:id", component: WeatherDetailsComponent, canActivate: [RouterAuthGuard] },
-  // { path: "home", component: HomeComponent },
-  // { path: "details/:id", component: WeatherDetailsComponent },
+  {
+    path: "home",
+    component: HomeComponent,
+    canActivate: [RouterAuthGuard],
+    children: [{ path: ":id", component: InfoscreenComponent }],
+  },
 ];
 
 @NgModule({

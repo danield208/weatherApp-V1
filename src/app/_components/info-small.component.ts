@@ -1,22 +1,28 @@
-import { Component } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { WeatherAPIService } from "../_service/weather-api.service";
+import { WeatherdataModel } from "../_model/weatherdata.model";
+import { Subscription, timer } from "rxjs";
+import { map, share } from "rxjs/operators";
+import { ActivatedRoute, Router } from "@angular/router";
+import { APIDataService } from "../_service/api-data.service";
 
 @Component({
   selector: "app-info-small",
   template: `
-    <mat-card>
-      <mat-card-content>
+    <mat-card (click)="openDetails()">
+      <mat-card-content *ngIf="weatherData">
         <div class="top">
           <div>
-            <span>{{ data.location.name }}</span>
-            <span>{{ data.location.localtime.split(" ")[1] }}</span>
+            <span>{{ weatherData.location.name }}</span>
+            <span>{{ rxTime | date : "dd.MM. HH:mm" }}</span>
           </div>
-          <span>{{ data.current.temp_c }}&#176;</span>
+          <span>{{ weatherData.temp_c }}&#176;</span>
         </div>
         <div class="bottom">
-          <span>{{ data.current.condition.text }}</span>
+          <span>{{ weatherData.condition.text }}</span>
           <span
-            >H: {{ data.forecastday[0].day.maxtemp_c }}&#176; | T:
-            {{ data.forecastday[0].day.mintemp_c }}&#176;</span
+            >H: {{ weatherData.forecastday[0].day.maxtemp_c }}&#176; | T:
+            {{ weatherData.forecastday[0].day.mintemp_c }}&#176;</span
           >
         </div>
       </mat-card-content>
@@ -27,5 +33,56 @@ import { Component } from "@angular/core";
     </mat-card>
   `,
   styleUrls: ["info-small.component.scss"],
+  providers: [WeatherAPIService],
 })
-export class InfoSmallComponent {}
+export class InfoSmallComponent implements OnInit, OnDestroy {
+  @Input() location!: string;
+  test: Array<string> = [];
+  weatherData!: WeatherdataModel;
+
+  rxTime: Date = new Date();
+  subscription!: Subscription;
+  constructor(
+    private api: WeatherAPIService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private data: APIDataService
+  ) {}
+
+  ngOnInit(): void {
+    this.getApiData();
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  openDetails() {
+    this.router.navigate([this.location], { relativeTo: this.route });
+  }
+
+  getApiData(): void {
+    this.api.getData(this.location).subscribe((result): void => {
+      this.weatherData = new WeatherdataModel(result);
+      this.api.getData(this.location, "history").subscribe((result) => {
+        this.weatherData.yesterday = result.forecast.forecastday[0];
+        this.data.loadedWeatherData[this.location] = this.weatherData;
+      });
+      this.setTime();
+    });
+  }
+
+  setTime(): void {
+    let dataTime = new Date(this.weatherData.location.localtime * 1000);
+    this.subscription = timer(0, 1000)
+      .pipe(
+        map(() => new Date(dataTime)),
+        share()
+      )
+      .subscribe((time) => {
+        dataTime.setSeconds(dataTime.getSeconds() + 1);
+        this.rxTime = time;
+      });
+  }
+}
