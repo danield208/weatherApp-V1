@@ -17,6 +17,13 @@ import { SignupComponent } from "./startscreen/signup.component";
 import { LoginComponent } from "./startscreen/login.component";
 import { AppComponent } from "./app.component";
 import { CurrentTodayComponent } from "./_components/current-today/current-today.component";
+import { InfoSmallComponent } from "./_components/info-small.component";
+import { InfoscreenComponent } from "./_components/infoscreen/infoscreen.component";
+import { CurrentHighlightsComponent } from "./_components/current-highlights/current-highlights.component";
+import { ReactiveFormsModule } from "@angular/forms";
+
+//form components
+import { SaveCityFormComponent } from "./_components/_forms/save-city-form/save-city-form.component";
 
 // services
 import { GeolocationService } from "./_service/geolocation.service";
@@ -35,9 +42,8 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { InfoSmallComponent } from "./_components/info-small.component";
-import { InfoscreenComponent } from "./_components/infoscreen/infoscreen.component";
-import { MatDividerModule } from "@angular/material/divider";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,21 +59,25 @@ import { MatDividerModule } from "@angular/material/divider";
     InfoSmallComponent,
     CurrentTodayComponent,
     InfoscreenComponent,
+    CurrentHighlightsComponent,
+    SaveCityFormComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
+    NgOptimizedImage,
 
     //material design
     MatSidenavModule,
     MatButtonModule,
     MatCardModule,
     MatProgressBarModule,
-    MatDividerModule,
-    NgOptimizedImage,
+    MatIconModule,
+    MatInputModule,
   ],
   providers: [
     GeolocationService,

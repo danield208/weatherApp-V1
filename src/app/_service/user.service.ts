@@ -33,6 +33,8 @@ export class UserService {
   auth = getAuth();
 
   User!: UserdataModel;
+  UID!: string;
+  Token!: string;
 
   userInitCompleted: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
@@ -53,14 +55,19 @@ export class UserService {
   signup(name: string, email: string, password: string): void {
     createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential): void => {
-        const newUser: UserdataModel = new UserdataModel({ email, name });
+        const newUser: UserdataModel = new UserdataModel({
+          email,
+          name,
+          savedcities: [],
+        });
         const UserString: string = JSON.stringify(newUser.toJson());
         userCredential.user.getIdToken().then((token: string) => {
-          this.database
-            .put(userCredential.user.uid, token, UserString)
-            .subscribe((result) => {
-              this.User = new UserdataModel(result);
-            });
+          const user = userCredential.user;
+          const userString = JSON.stringify({ uid: user.uid, token: token });
+          localStorage.setItem("user", userString);
+          this.database.put(user.uid, token, UserString).subscribe((result) => {
+            this.User = new UserdataModel(result);
+          });
           this.userInitCompleted.next(true);
           this.router.navigateByUrl("/home");
         });
@@ -72,7 +79,7 @@ export class UserService {
       });
   }
 
-  login(email: string, password: string, saveLogin: any) {
+  login(email: string, password: string) {
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -81,7 +88,7 @@ export class UserService {
             uid: user.uid,
             token: token,
           });
-          if (saveLogin) localStorage.setItem("user", userString);
+          localStorage.setItem("user", userString);
           this.database.get(user.uid, token).subscribe((result) => {
             this.User = new UserdataModel(result);
             this.userInitCompleted.next(true);

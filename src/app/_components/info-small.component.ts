@@ -9,8 +9,8 @@ import { APIDataService } from "../_service/api-data.service";
 @Component({
   selector: "app-info-small",
   template: `
-    <mat-card (click)="openDetails()">
-      <mat-card-content *ngIf="weatherData">
+    <mat-card>
+      <mat-card-content *ngIf="weatherData" (click)="openDetails()">
         <div class="top">
           <div>
             <span>{{ weatherData.location.name }}</span>
@@ -28,7 +28,10 @@ import { APIDataService } from "../_service/api-data.service";
       </mat-card-content>
 
       <mat-card-footer>
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <mat-progress-bar
+          *ngIf="showLoader"
+          mode="indeterminate"
+        ></mat-progress-bar>
       </mat-card-footer>
     </mat-card>
   `,
@@ -37,11 +40,10 @@ import { APIDataService } from "../_service/api-data.service";
 })
 export class InfoSmallComponent implements OnInit, OnDestroy {
   @Input() location!: string;
-  test: Array<string> = [];
   weatherData!: WeatherdataModel;
-
   rxTime: Date = new Date();
   subscription!: Subscription;
+  showLoader: boolean = true;
   constructor(
     private api: WeatherAPIService,
     private router: Router,
@@ -63,11 +65,13 @@ export class InfoSmallComponent implements OnInit, OnDestroy {
   }
 
   getApiData(): void {
+    this.showLoader = true;
     this.api.getData(this.location).subscribe((result): void => {
       this.weatherData = new WeatherdataModel(result);
       this.api.getData(this.location, "history").subscribe((result) => {
         this.weatherData.yesterday = result.forecast.forecastday[0];
         this.data.loadedWeatherData[this.location] = this.weatherData;
+        this.showLoader = false;
       });
       this.setTime();
     });

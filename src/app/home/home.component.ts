@@ -18,18 +18,21 @@ import { Subscription } from "rxjs";
         ></app-info-small>
         <br />
         <p>Saved locations:</p>
-        <input placeholder="add location" />
-        <content>
-          <span>Saved cities</span>
-        </content>
+        <app-save-city-form></app-save-city-form>
+        <span>Saved cities</span>
+
+        <app-info-small
+          *ngFor="let city of user.User.savedcities"
+          [location]="city"
+        ></app-info-small>
       </mat-drawer>
 
       <mat-drawer-content>
-        <button class="toggleBTN" mat-raised-button (click)="drawer.toggle()">
-          Sidenav
+        <button mat-icon-button class="toggleBTN" (click)="drawer.toggle()">
+          <mat-icon>menu</mat-icon>
         </button>
-        <button class="logoutBTN" mat-raised-button (click)="logout()">
-          LogOut
+        <button mat-icon-button class="logoutBTN" (click)="logout()">
+          <mat-icon>logout</mat-icon>
         </button>
         <router-outlet></router-outlet>
       </mat-drawer-content>

@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { WeatherdataModel } from "../../_model/weatherdata.model";
 import { APIDataService } from "../../_service/api-data.service";
 
 @Component({
@@ -15,6 +14,12 @@ export class InfoscreenComponent implements OnInit {
   constructor(private route: ActivatedRoute, private data: APIDataService) {}
 
   ngOnInit() {
+    this.route.params.subscribe(() => {
+      this.getValues();
+    });
+  }
+
+  getValues() {
     this.coordinates = this.route.snapshot.paramMap.get("id");
     this.currentData = this.data.loadedWeatherData[this.coordinates];
   }

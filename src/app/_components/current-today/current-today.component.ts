@@ -1,13 +1,21 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from "@angular/core";
 
 @Component({
   selector: "app-current-today",
   templateUrl: "./current-today.component.html",
   styleUrls: ["./current-today.component.scss"],
 })
-export class CurrentTodayComponent implements OnInit {
+export class CurrentTodayComponent implements OnInit, OnChanges {
   @Input("currentData") public data!: any;
   public imgIconCondition!: string;
+
+  public imgLoading!: boolean;
 
   public conditionIcon!: string;
   public conditionText!: string;
@@ -17,8 +25,20 @@ export class CurrentTodayComponent implements OnInit {
   public code!: number;
 
   ngOnInit() {
+    this.imgLoading = true;
+    this.initModule();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.imgLoading = true;
+    this.initModule();
+  }
+
+  initModule() {
     this.setValues();
     this.setImgCondition();
+    this.setDate();
+    this.imgLoading = false;
   }
 
   setValues() {
@@ -35,5 +55,10 @@ export class CurrentTodayComponent implements OnInit {
   setImgCondition() {
     this.imgIconCondition =
       "./assets/images/weathercondition/" + this.code + ".png";
+  }
+
+  setDate() {
+    this.date =
+      this.date.getDay() + this.date.getMonth() + (this.date.getYear() + 1);
   }
 }
