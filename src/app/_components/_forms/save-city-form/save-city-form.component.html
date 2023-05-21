@@ -1,0 +1,16 @@
+<script src="../../../home/home.component.ts"></script>
+<script src="../../../_service/api-data.service.ts"></script>
+<form [formGroup]="searchCityForm" (ngSubmit)="saveNewCity()">
+    <mat-form-field>
+        <mat-label>City</mat-label>
+        <input type="text" matInput formControlName="cityname"
+               placeholder="Ex. Berlin" #inputCityField>
+        <mat-error *ngIf="(searchCityForm.invalid && !searchCityForm.dirty)">
+            City not found (min. 3 letters)
+        </mat-error>
+    </mat-form-field>
+    <button mat-icon-button type="submit"
+            [disabled]="(searchCityForm.invalid && !searchCityForm.dirty || searchCityForm.invalid)">
+        <mat-icon>chevron_right</mat-icon>
+    </button>
+</form>

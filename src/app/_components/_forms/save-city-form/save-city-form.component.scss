@@ -1,0 +1,18 @@
+form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  position: relative;
+
+  button {
+    position: absolute;
+    right: 8px;
+    top: 6px;
+
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}
