@@ -1,0 +1,69 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px;
+  border: 1px solid white;
+  border-radius: 12px;
+}
+
+p {
+  font-size: 0.8rem;
+  color: #c5c5c5;
+  margin: 0;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexColumn {
+  flex-direction: column;
+}
+
+content {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+
+  .windStatus, .uvIndex, .sunriseSunset {
+    height: 100%;
+    width: 100%;
+  }
+
+  .humidity, .visibility, .feelsLike {
+    height: 4rem;
+    width: 100%;
+  }
+}
+
+.windStatus {
+  width: 100%;
+ div {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   span {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   }
+ }
+}
+
+.humidity {
+
+}

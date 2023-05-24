@@ -38,15 +38,15 @@ export class SaveCityFormComponent implements OnInit {
 
   saveNewCity(): void {
     const inputValue: any = this.searchCityForm.controls["cityname"].value;
-    if (this.checkIfDoubleCity(inputValue)) {
+    if (!this.checkIfDoubleCity(inputValue)) {
+      this.inputCityField.nativeElement.blur();
+      this.user.User.savedcities.push(inputValue);
+      this.database
+        .updateSavedCities({ savedcities: this.user.User.savedcities })
+        .subscribe((result) => {
+          console.log(result);
+        });
     }
-    this.inputCityField.nativeElement.blur();
-    this.user.User.savedcities.push(inputValue);
-    this.database
-      .updateSavedCities({ savedcities: this.user.User.savedcities })
-      .subscribe((result) => {
-        console.log(result);
-      });
     this.searchCityForm.reset();
   }
 

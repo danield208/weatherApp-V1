@@ -20,11 +20,12 @@ import { Subscription } from "rxjs";
         <p>Saved locations:</p>
         <app-save-city-form></app-save-city-form>
         <span>Saved cities</span>
-
-        <app-info-small
-          *ngFor="let city of user.User.savedcities"
-          [location]="city"
-        ></app-info-small>
+        <div class="savedCitiesList">
+          <app-info-small
+            *ngFor="let city of user.User.savedcities"
+            [location]="city"
+          ></app-info-small>
+        </div>
       </mat-drawer>
 
       <mat-drawer-content>

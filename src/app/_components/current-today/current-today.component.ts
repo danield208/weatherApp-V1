@@ -5,18 +5,19 @@ import {
   OnInit,
   SimpleChanges,
 } from "@angular/core";
+import { CommonModule, NgOptimizedImage } from "@angular/common";
 
 @Component({
   selector: "app-current-today",
   templateUrl: "./current-today.component.html",
   styleUrls: ["./current-today.component.scss"],
+  standalone: true,
+  imports: [CommonModule, NgOptimizedImage],
 })
 export class CurrentTodayComponent implements OnInit, OnChanges {
   @Input("currentData") public data!: any;
   public imgIconCondition!: string;
-
   public imgLoading!: boolean;
-
   public conditionIcon!: string;
   public conditionText!: string;
   public temp!: number;

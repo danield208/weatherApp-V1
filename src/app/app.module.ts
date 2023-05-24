@@ -1,37 +1,33 @@
 import { NgModule } from "@angular/core";
+import { AppComponent } from "./app.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
 import { NgOptimizedImage } from "@angular/common";
 
 import { HttpClientModule } from "@angular/common/http";
+import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from "@angular/forms";
 
 // components
-import { OverviewComponent } from "./weather-details/overview/overview.component";
-import { InfoComponent } from "./weather-details/info/info.component";
-import { ForecastComponent } from "./weather-details/forecast/forecast.component";
-import { ForecastDayComponent } from "./weather-details/forecast/forecast-day.component";
 import { HomeComponent } from "./home/home.component";
 import { StartscreenComponent } from "./startscreen/startscreen.component";
 import { SignupComponent } from "./startscreen/signup.component";
 import { LoginComponent } from "./startscreen/login.component";
-import { AppComponent } from "./app.component";
-import { CurrentTodayComponent } from "./_components/current-today/current-today.component";
-import { InfoSmallComponent } from "./_components/info-small.component";
-import { InfoscreenComponent } from "./_components/infoscreen/infoscreen.component";
-import { CurrentHighlightsComponent } from "./_components/current-highlights/current-highlights.component";
-import { ReactiveFormsModule } from "@angular/forms";
+//import { CurrentTodayComponent } from "./_components/current-today/current-today.component";
+import { InfoSmallComponent } from "./_components/info-small/info-small.component";
+// import { InfoscreenComponent } from "./_components/infoscreen/infoscreen.component";
+//import { CurrentHighlightsComponent } from "./_components/current-highlights/current-highlights.component";
+//import { ForecastComponent } from "./_components/forecast/forecast.component";
+import { ImprintComponent } from "./imprint/imprint.component";
 
 //form components
 import { SaveCityFormComponent } from "./_components/_forms/save-city-form/save-city-form.component";
 
 // services
 import { GeolocationService } from "./_service/geolocation.service";
-import { WeatherDetailsComponent } from "./weather-details/weather-details.component";
 import { APIDataService } from "./_service/api-data.service";
 import { UserService } from "./_service/user.service";
 import { DatabaseService } from "./_service/database.service";
-import { ThemeService } from "./_service/theme.service";
 
 // guards
 import { RouterAuthGuard } from "./_guard/router.guard";
@@ -44,23 +40,18 @@ import { MatCardModule } from "@angular/material/card";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
+import { DragDropModule } from "@angular/cdk/drag-drop";
+
 @NgModule({
   declarations: [
     AppComponent,
-    OverviewComponent,
-    InfoComponent,
-    ForecastComponent,
-    ForecastDayComponent,
-    HomeComponent,
-    WeatherDetailsComponent,
     StartscreenComponent,
     SignupComponent,
     LoginComponent,
     InfoSmallComponent,
-    CurrentTodayComponent,
-    InfoscreenComponent,
-    CurrentHighlightsComponent,
     SaveCityFormComponent,
+    HomeComponent,
+    ImprintComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +69,7 @@ import { MatInputModule } from "@angular/material/input";
     MatProgressBarModule,
     MatIconModule,
     MatInputModule,
+    DragDropModule,
   ],
   providers: [
     GeolocationService,
@@ -85,8 +77,8 @@ import { MatInputModule } from "@angular/material/input";
     UserService,
     DatabaseService,
     RouterAuthGuard,
-    ThemeService,
   ],
   bootstrap: [AppComponent],
+  exports: [InfoSmallComponent, SaveCityFormComponent],
 })
 export class AppModule {}
