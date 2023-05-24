@@ -2,23 +2,18 @@ import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
-import { NgOptimizedImage } from "@angular/common";
 
 import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from "@angular/forms";
 
 // components
-import { HomeComponent } from "./home/home.component";
-import { StartscreenComponent } from "./startscreen/startscreen.component";
-import { SignupComponent } from "./startscreen/signup.component";
-import { LoginComponent } from "./startscreen/login.component";
-//import { CurrentTodayComponent } from "./_components/current-today/current-today.component";
-import { InfoSmallComponent } from "./_components/info-small/info-small.component";
-// import { InfoscreenComponent } from "./_components/infoscreen/infoscreen.component";
-//import { CurrentHighlightsComponent } from "./_components/current-highlights/current-highlights.component";
-//import { ForecastComponent } from "./_components/forecast/forecast.component";
-import { ImprintComponent } from "./imprint/imprint.component";
+import { HomeComponent } from "./_components/home/home.component";
+// import { StartscreenComponent } from "./_components/startscreen/startscreen.component";
+// import { SignupComponent } from "./_components/startscreen/signup.component";
+// import { LoginComponent } from "./_components/startscreen/login.component";
+import { InfoSmallComponent } from "./_components/home/info-small/info-small.component";
+import { ImprintComponent } from "./_components/imprint/imprint.component";
 
 //form components
 import { SaveCityFormComponent } from "./_components/_forms/save-city-form/save-city-form.component";
@@ -45,9 +40,6 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 @NgModule({
   declarations: [
     AppComponent,
-    StartscreenComponent,
-    SignupComponent,
-    LoginComponent,
     InfoSmallComponent,
     SaveCityFormComponent,
     HomeComponent,
@@ -60,7 +52,6 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    NgOptimizedImage,
 
     //material design
     MatSidenavModule,

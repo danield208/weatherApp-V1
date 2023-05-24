@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { UserService } from "../_service/user.service";
+import { UserService } from "../../../_service/user.service";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-signup",
@@ -68,6 +70,8 @@ import { UserService } from "../_service/user.service";
     <button class="close" (click)="closeWindow()">&#215;</button>
   `,
   styleUrls: ["./form.scss"],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
 })
 export class SignupComponent {
   nameV: string = "";

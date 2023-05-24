@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { APIDataService } from "../../_service/api-data.service";
-import { CurrentTodayComponent } from "../current-today/current-today.component";
-import { ForecastComponent } from "../forecast/forecast.component";
-import { CurrentHighlightsComponent } from "../current-highlights/current-highlights.component";
+import { APIDataService } from "../../../_service/api-data.service";
+import { CurrentTodayComponent } from "./current-today/current-today.component";
+import { ForecastComponent } from "./forecast/forecast.component";
+import { CurrentHighlightsComponent } from "./current-highlights/current-highlights.component";
 import { CommonModule } from "@angular/common";
 
 @Component({

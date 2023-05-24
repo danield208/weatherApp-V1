@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { APIDataService } from "../_service/api-data.service";
-import { WeatherAPIService } from "../_service/weather-api.service";
-import { GeolocationService } from "../_service/geolocation.service";
-import { UserService } from "../_service/user.service";
+import { APIDataService } from "../../_service/api-data.service";
+import { WeatherAPIService } from "../../_service/weather-api.service";
+import { GeolocationService } from "../../_service/geolocation.service";
+import { UserService } from "../../_service/user.service";
 import { Subscription } from "rxjs";
 
 @Component({

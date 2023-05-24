@@ -5,11 +5,11 @@ import { RouterModule, Routes } from "@angular/router";
 import { RouterAuthGuard } from "./_guard/router.guard";
 
 //components
-import { HomeComponent } from "./home/home.component";
-import { LoginComponent } from "./startscreen/login.component";
-import { SignupComponent } from "./startscreen/signup.component";
-import { StartscreenComponent } from "./startscreen/startscreen.component";
-// import { InfoscreenComponent } from "./_components/infoscreen/infoscreen.component";
+import { HomeComponent } from "./_components/home/home.component";
+import { StartscreenComponent } from "./_components/startscreen/startscreen.component";
+
+// routes
+import { StartscreenRoutes } from "./_components/startscreen/startscreen-routing.module";
 
 const routes: Routes = [
   {
@@ -19,11 +19,11 @@ const routes: Routes = [
   },
   {
     path: "start",
-    component: StartscreenComponent,
-    children: [
-      { path: "signup", component: SignupComponent },
-      { path: "login", component: LoginComponent },
-    ],
+    loadComponent: () =>
+      import("./_components/startscreen/startscreen.component").then(
+        (m) => m.StartscreenComponent
+      ),
+    children: StartscreenRoutes,
   },
   {
     path: "home",
@@ -33,7 +33,7 @@ const routes: Routes = [
       {
         path: ":id",
         loadComponent: () =>
-          import("./_components/infoscreen/infoscreen.component").then(
+          import("./_components/home/infoscreen/infoscreen.component").then(
             (m) => m.InfoscreenComponent
           ),
       },

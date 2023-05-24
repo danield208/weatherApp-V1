@@ -1,10 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { WeatherAPIService } from "../../_service/weather-api.service";
-import { WeatherdataModel } from "../../_model/weatherdata.model";
+import { WeatherAPIService } from "../../../_service/weather-api.service";
+import { WeatherdataModel } from "../../../_model/weatherdata.model";
 import { Subscription, timer } from "rxjs";
 import { map, share } from "rxjs/operators";
 import { ActivatedRoute, Router } from "@angular/router";
-import { APIDataService } from "../../_service/api-data.service";
+import { APIDataService } from "../../../_service/api-data.service";
 
 @Component({
   selector: "app-info-small",
@@ -46,6 +46,7 @@ export class InfoSmallComponent implements OnInit, OnDestroy {
   rxTime: Date = new Date();
   subscription!: Subscription;
   showLoader: boolean = true;
+
   constructor(
     private api: WeatherAPIService,
     private router: Router,
