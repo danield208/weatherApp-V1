@@ -6,7 +6,6 @@ import { RouterAuthGuard } from "./_guard/router.guard";
 
 //components
 import { HomeComponent } from "./_components/home/home.component";
-import { StartscreenComponent } from "./_components/startscreen/startscreen.component";
 
 // routes
 import { StartscreenRoutes } from "./_components/startscreen/startscreen-routing.module";

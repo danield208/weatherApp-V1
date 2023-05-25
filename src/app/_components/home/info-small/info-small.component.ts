@@ -5,6 +5,9 @@ import { Subscription, timer } from "rxjs";
 import { map, share } from "rxjs/operators";
 import { ActivatedRoute, Router } from "@angular/router";
 import { APIDataService } from "../../../_service/api-data.service";
+import { CommonModule } from "@angular/common";
+import { MatCardModule } from "@angular/material/card";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 @Component({
   selector: "app-info-small",
@@ -34,8 +37,6 @@ import { APIDataService } from "../../../_service/api-data.service";
         ></mat-progress-bar>
       </mat-card-footer>
     </mat-card>
-
-    <div class="dndPlaceholder" *cdkDragPlaceholder></div>
   `,
   styleUrls: ["info-small.component.scss"],
   providers: [WeatherAPIService],

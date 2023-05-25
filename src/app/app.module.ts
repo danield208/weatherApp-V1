@@ -9,10 +9,6 @@ import { FormsModule } from "@angular/forms";
 
 // components
 import { HomeComponent } from "./_components/home/home.component";
-// import { StartscreenComponent } from "./_components/startscreen/startscreen.component";
-// import { SignupComponent } from "./_components/startscreen/signup.component";
-// import { LoginComponent } from "./_components/startscreen/login.component";
-import { InfoSmallComponent } from "./_components/home/info-small/info-small.component";
 import { ImprintComponent } from "./_components/imprint/imprint.component";
 
 //form components
@@ -35,15 +31,15 @@ import { MatCardModule } from "@angular/material/card";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
-import { DragDropModule } from "@angular/cdk/drag-drop";
+import { InfoSmallComponent } from "./_components/home/info-small/info-small.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    InfoSmallComponent,
     SaveCityFormComponent,
-    HomeComponent,
     ImprintComponent,
+    InfoSmallComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,7 +56,6 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     MatProgressBarModule,
     MatIconModule,
     MatInputModule,
-    DragDropModule,
   ],
   providers: [
     GeolocationService,
@@ -70,6 +65,6 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     RouterAuthGuard,
   ],
   bootstrap: [AppComponent],
-  exports: [InfoSmallComponent, SaveCityFormComponent],
+  exports: [SaveCityFormComponent],
 })
 export class AppModule {}

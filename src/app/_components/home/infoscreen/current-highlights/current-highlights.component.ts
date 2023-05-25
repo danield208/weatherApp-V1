@@ -28,6 +28,6 @@ export class CurrentHighlightsComponent implements OnInit, OnChanges {
   }
 
   initModule() {
-    console.log(this.data);
+    // console.log(this.data);
   }
 }

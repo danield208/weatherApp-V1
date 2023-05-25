@@ -5,6 +5,8 @@ import { WeatherAPIService } from "../../_service/weather-api.service";
 import { GeolocationService } from "../../_service/geolocation.service";
 import { UserService } from "../../_service/user.service";
 import { Subscription } from "rxjs";
+import { InfoSmallComponent } from "./info-small/info-small.component";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "app-home",

@@ -1,8 +1,12 @@
 :host {
 	display: block;
-	background: rgba(0, 0, 0, 0.5) url("/src/assets/images/background/nature.png") no-repeat center center fixed;
+	background: rgba(0, 0, 0, 0.5) url("/assets/images/background/nature.png") no-repeat center center fixed;
 	background-blend-mode: darken;
 	background-size: cover;
+}
+
+* {
+	color: white;
 }
 
 div {

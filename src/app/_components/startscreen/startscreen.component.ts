@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from "@angular/core";
+import { AfterViewInit, Component, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { UserService } from "../../_service/user.service";
 import { DatabaseService } from "../../_service/database.service";

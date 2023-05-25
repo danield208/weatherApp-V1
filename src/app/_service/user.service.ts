@@ -33,8 +33,6 @@ export class UserService {
   auth = getAuth();
 
   User!: UserdataModel;
-  UID!: string;
-  Token!: string;
 
   userInitCompleted: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
@@ -58,7 +56,6 @@ export class UserService {
         const newUser: UserdataModel = new UserdataModel({
           email,
           name,
-          savedcities: [],
         });
         const UserString: string = JSON.stringify(newUser.toJson());
         userCredential.user.getIdToken().then((token: string) => {
