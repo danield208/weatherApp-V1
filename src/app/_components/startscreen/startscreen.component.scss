@@ -15,7 +15,7 @@ div {
 	justify-content: center;
 	height: 100dvh;
 	width: 100dvw;
-	background-color: transparent;
+	background-color: rgba(22, 22, 22, 0.36);
 	backdrop-filter: blur(10px);
 }
 
@@ -54,10 +54,7 @@ h1 {
 button {
 	background: transparent;
 	width: 80%;
-	height: 2rem;
-	border-style: unset;
-	border: 1px solid white;
-	border-radius: 10px;
+	border-radius: 4px;
 	font-size: 1.5rem;
 
 	cursor: pointer;

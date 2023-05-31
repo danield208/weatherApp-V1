@@ -1,7 +1,8 @@
 :host {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
   border-radius: 12px;
   border: 1px white solid;
   padding: 32px;

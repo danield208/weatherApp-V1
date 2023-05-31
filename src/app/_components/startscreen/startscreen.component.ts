@@ -5,6 +5,7 @@ import { DatabaseService } from "../../_service/database.service";
 import { CommonModule } from "@angular/common";
 import { LoginComponent } from "./login_signup/login.component";
 import { SignupComponent } from "./login_signup/signup.component";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
   selector: "app-startscreen",
@@ -12,11 +13,22 @@ import { SignupComponent } from "./login_signup/signup.component";
     <div>
       <main>
         <h1>Weather</h1>
-        <button *ngIf="router.url !== '/start/signup'" (click)="initSignUp()">
+        <button
+          mat-raised-button
+          *ngIf="router.url !== '/start/signup'"
+          (click)="initSignUp()"
+        >
           New here?
         </button>
-        <button *ngIf="router.url !== '/start/login'" (click)="initlogin()">
+        <button
+          mat-raised-button
+          *ngIf="router.url !== '/start/login'"
+          (click)="initlogin()"
+        >
           Login
+        </button>
+        <button mat-raised-button (click)="loginAsGuest()">
+          Login as Guest
         </button>
         <router-outlet></router-outlet>
       </main>
@@ -24,19 +36,27 @@ import { SignupComponent } from "./login_signup/signup.component";
   `,
   styleUrls: ["./startscreen.component.scss"],
   standalone: true,
-  imports: [CommonModule, LoginComponent, SignupComponent, RouterModule],
+  imports: [
+    CommonModule,
+    LoginComponent,
+    SignupComponent,
+    RouterModule,
+    MatButtonModule,
+  ],
 })
 export class StartscreenComponent implements AfterViewInit {
+  guestParams: any = {
+    email: "guest@weather.api",
+    password: "guestPassword",
+  };
   constructor(
-    private auth: UserService,
+    private user: UserService,
     public router: Router,
     private route: ActivatedRoute,
     private database: DatabaseService
   ) {}
 
   ngAfterViewInit(): void {
-    this.checkLocalSorageLogin();
-
     if (localStorage.getItem("user")) {
       const localStorageString: any = localStorage.getItem("user");
       const user = JSON.parse(localStorageString);
@@ -44,7 +64,9 @@ export class StartscreenComponent implements AfterViewInit {
     }
   }
 
-  checkLocalSorageLogin() {}
+  loginAsGuest() {
+    this.user.login(this.guestParams.email, this.guestParams.password);
+  }
 
   initSignUp() {
     this.router.navigate(["signup"], { relativeTo: this.route });

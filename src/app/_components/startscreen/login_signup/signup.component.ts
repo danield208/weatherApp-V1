@@ -1,99 +1,56 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserService } from "../../../_service/user.service";
 import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
   selector: "app-signup",
-  template: `
-    <h1>Registration</h1>
-    <form #register="ngForm" (ngSubmit)="signup(register.form)">
-      <div class="form-group">
-        <div class="aboveInput">
-          <label for="name">Name</label><br />
-          <div *ngIf="name.touched && name.invalid" class="alert">Invalid</div>
-        </div>
-        <input
-          #name="ngModel"
-          type="text"
-          name="name"
-          class="form-control"
-          required
-          minlength="3"
-          [value]="nameV"
-          ngModel
-        />
-      </div>
-      <br />
-      <div class="form-group">
-        <div class="aboveInput">
-          <label for="email">E-Mail</label><br />
-          <div *ngIf="email.touched && email.invalid" class="alert">
-            Invalid
-          </div>
-        </div>
-        <input
-          #email="ngModel"
-          type="text"
-          name="email"
-          class="form-control"
-          required
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"
-          [value]="emailV"
-          ngModel
-        />
-      </div>
-      <br />
-      <div class="form-group">
-        <div class="aboveInput">
-          <label for="password">Password</label><br />
-          <div *ngIf="password.touched && password.invalid" class="alert">
-            Invalid
-          </div>
-        </div>
-        <input
-          #password="ngModel"
-          type="password"
-          name="password"
-          class="form-control"
-          required
-          minlength="6"
-          [value]="passwordV"
-          [placeholder]="passwordPH"
-          ngModel
-        />
-      </div>
-      <br />
-      <button type="submit">Register</button>
-    </form>
-    <button class="close" (click)="closeWindow()">&#215;</button>
-  `,
+  templateUrl: "signup.component.html",
   styleUrls: ["./form.scss"],
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+  ],
 })
-export class SignupComponent {
-  nameV: string = "";
-  emailV: string = "";
-  passwordV: string = "";
-  passwordPH: string = "";
+export class SignupComponent implements OnInit {
+  registerForm!: FormGroup;
 
   constructor(public user: UserService, private router: Router) {}
 
-  signup(form: any) {
-    if (form.status == "VALID") {
-      this.user.signup(form.value.name, form.value.email, form.value.password);
+  ngOnInit() {
+    this.registerForm = new FormGroup({
+      name: new FormControl(null, Validators.required),
+      email: new FormControl(null, Validators.required),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
+    });
+  }
+  signup() {
+    if (this.registerForm.status == "VALID") {
+      this.user.signup(
+        this.registerForm.value.name,
+        this.registerForm.value.email,
+        this.registerForm.value.password
+      );
     } else {
-      Object.entries(form.controls).forEach(([key, value]) => {
-        let data: any = value;
-        if (data.status == "INVALID") {
-          if (key == "name") this.nameV = "Invalid";
-          if (key == "email") this.emailV = "Invalid";
-          if (key == "password") this.passwordV = "";
-          if (key == "password") this.passwordPH = "Invalid";
-        }
-      });
+      console.error("error: form not valid");
     }
   }
 

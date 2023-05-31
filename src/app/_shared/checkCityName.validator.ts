@@ -12,11 +12,9 @@ export class checkCityNameValidator implements AsyncValidator {
     return this.api.getData(value).pipe(
       //   errors skip the map(). if we return null, means we got 200 response code
       map(() => {
-        console.log("city found");
         return null;
       }),
       catchError((err) => {
-        console.log(err);
         if (err.error.token) {
           //catchError has to return a new Observable and "of" is a shortcut
           return of({ cityFound: true });
