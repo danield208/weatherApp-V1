@@ -1,0 +1,33 @@
+<mat-drawer-container autosize *ngIf="userLoaded">
+    <mat-drawer #drawer mode="side" opened>
+        <h1>Weather</h1>
+        <app-info-small
+                *ngIf="geoLoaded"
+                [location]="geo.coordinates"
+        ></app-info-small>
+        <br />
+        <p>Saved locations:</p>
+        <app-save-city-form></app-save-city-form>
+        <span>Saved cities</span>
+        <div class="savedCitiesList">
+            <app-info-small
+                    *ngFor="let city of user.User.savedcities"
+                    [location]="city"
+            ></app-info-small>
+        </div>
+    </mat-drawer>
+
+    <mat-drawer-content>
+        <mat-card class="topNavbar">
+            <mat-card-content>
+                <button mat-icon-button class="toggleBTN" (click)="drawer.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <button mat-icon-button class="logoutBTN" (click)="logout()">
+                    <mat-icon>logout</mat-icon>
+                </button>
+            </mat-card-content>
+        </mat-card>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>

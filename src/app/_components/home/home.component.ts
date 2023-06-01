@@ -10,37 +10,7 @@ import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "app-home",
-  template: `
-    <mat-drawer-container autosize *ngIf="userLoaded">
-      <mat-drawer #drawer mode="side" opened>
-        <h1>Weather</h1>
-        <app-info-small
-          *ngIf="geoLoaded"
-          [location]="geo.coordinates"
-        ></app-info-small>
-        <br />
-        <p>Saved locations:</p>
-        <app-save-city-form></app-save-city-form>
-        <span>Saved cities</span>
-        <div class="savedCitiesList">
-          <app-info-small
-            *ngFor="let city of user.User.savedcities"
-            [location]="city"
-          ></app-info-small>
-        </div>
-      </mat-drawer>
-
-      <mat-drawer-content>
-        <button mat-icon-button class="toggleBTN" (click)="drawer.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <button mat-icon-button class="logoutBTN" (click)="logout()">
-          <mat-icon>logout</mat-icon>
-        </button>
-        <router-outlet></router-outlet>
-      </mat-drawer-content>
-    </mat-drawer-container>
-  `,
+  templateUrl: "home.component.html",
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {

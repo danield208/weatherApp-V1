@@ -9,6 +9,15 @@
   transform: translate(-50%, -50%);
 }
 
+.mat-mdc-card {
+  border: 1px solid white;
+  padding: 8px;
+}
+
+.mat-mdc-card-content:first-child {
+  padding: 0;
+}
+
 .top {
   display: flex;
   justify-content: space-between;
