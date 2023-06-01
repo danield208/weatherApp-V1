@@ -1,27 +1,16 @@
 # WeatherAppV1
+This app is all about Weather - Enjoy.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
+Current Version on main branch: 1.0.2
+last updated: 01.06.2023
 
-## Development server
+## What is this all about?
+This weather app is living on the web to showcase my skills.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## What did I use to develop it?
+I used Fireauth to create a stable and easy Login to the App.
+To store userdata I communicate using the Angular httpClient in Firebase. 
+For the style there comes Material Design for Angular and my own CSS with SCSS.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Want to have a look?
+https://weather.danieldoerbaum.de/
