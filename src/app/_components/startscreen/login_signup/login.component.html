@@ -1,0 +1,21 @@
+<h1>Login</h1>
+
+<form [formGroup]="loginForm">
+  <mat-form-field appearance="outline">
+    <mat-label for="email">E-Mail</mat-label>
+    <input type="email" id="email" formControlName="email" matInput>
+    <mat-error *ngIf="!loginForm.get('email')?.valid">
+      E-Mail is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label for="password">Password</mat-label>
+    <input type="password" id="password" formControlName="password" matInput>
+    <mat-error *ngIf="!loginForm.get('password')?.valid">
+      Password is required (min. length: 6)
+    </mat-error>
+  </mat-form-field>
+  <button [disabled]="!loginForm.valid && !loginForm.dirty" mat-raised-button type="submit" (click)="login()">Login</button>
+</form>
+
+<button class="close" (click)="closeWindow()">&#215;</button>

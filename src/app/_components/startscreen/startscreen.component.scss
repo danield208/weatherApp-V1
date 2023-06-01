@@ -1,0 +1,67 @@
+:host {
+	display: block;
+	background: rgba(0, 0, 0, 0.5) url("/assets/images/background/nature.png") no-repeat center center fixed;
+	background-blend-mode: darken;
+	background-size: cover;
+}
+
+* {
+	color: white;
+}
+
+div {
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	height: 100dvh;
+	width: 100dvw;
+	background-color: rgba(22, 22, 22, 0.36);
+	backdrop-filter: blur(10px);
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 12px;
+	padding-bottom: 20%;
+	width: 100%;
+}
+
+h1 {
+	font-size: 3rem;
+	text-align: center;
+	background-image: linear-gradient(
+		to right bottom,
+		#0cb0d3,
+		#00a7de,
+		#009de9,
+		#0091f0,
+		#0082f2,
+		#3079f5,
+		#4e6ef5,
+		#6961f3,
+		#7559f8,
+		#824ffc,
+		#9042fe,
+		#9f2fff
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+button {
+	background: transparent;
+	width: 80%;
+	border-radius: 4px;
+	font-size: 1.5rem;
+
+	cursor: pointer;
+}
+
+@media (min-width: 646px) {
+	main {
+		width: 646px;
+	}
+}
