@@ -8,11 +8,14 @@
 	width: 100%;
 }
 
+.mat-drawer-content {
+	width: 100%;
+}
+
 .mat-drawer {
 	height: 100%;
 	width: 300px;
 	padding: 20px;
-
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -26,22 +29,12 @@
 	}
 }
 
-@media (max-width: 324px) {
-	mat-drawer {
-		width: 100%;
-	}
-}
-
 .topNavbar {
 	display: flex;
 
 	.mat-mdc-card-content {
 		padding: 0;
 	}
-}
-
-h1 {
-	width: 100%;
 }
 
 hr {
@@ -64,5 +57,15 @@ input {
 	gap: 12px;
 }
 
+.closeBtn {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+}
 
+@media (max-width: 1200px) {
+	.mat-drawer {
+		width: 100%;
+	}
+}
 

@@ -2,7 +2,7 @@
 <script src="../../../_service/api-data.service.ts"></script>
 <form [formGroup]="searchCityForm" (ngSubmit)="saveNewCity()">
     <mat-form-field>
-        <mat-label>City</mat-label>
+        <mat-label>Add City</mat-label>
         <input type="text" matInput formControlName="cityname"
                placeholder="Ex. Berlin" #inputCityField>
         <mat-error *ngIf="(searchCityForm.invalid && !searchCityForm.dirty)">

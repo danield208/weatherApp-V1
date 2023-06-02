@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 export class GeolocationService {
   locationError: boolean = false;
   coordinates!: string;
+  locationErrorMessage!: any;
   locationLoaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
@@ -22,7 +23,9 @@ export class GeolocationService {
         (error: GeolocationPositionError) => {
           observer.error(error);
           this.locationError = true;
+          this.locationErrorMessage = error.message;
           this.locationLoaded.next(true);
+          console.log(error.message);
         }
       );
     } else {

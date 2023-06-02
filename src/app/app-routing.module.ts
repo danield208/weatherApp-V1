@@ -36,6 +36,13 @@ const routes: Routes = [
             (m) => m.InfoscreenComponent
           ),
       },
+      {
+        path: "",
+        loadComponent: () =>
+          import(
+            "./_components/select-location/select-location.component"
+          ).then((m) => m.SelectLocationComponent),
+      },
     ],
   },
 ];
