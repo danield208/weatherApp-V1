@@ -9,7 +9,6 @@
 }
 
 .mat-drawer-content {
-	width: 100%;
 }
 
 .mat-drawer {
@@ -33,6 +32,8 @@
 	display: flex;
 
 	.mat-mdc-card-content {
+		display: flex;
+		justify-content: space-between;
 		padding: 0;
 	}
 }

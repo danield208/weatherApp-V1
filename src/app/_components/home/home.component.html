@@ -24,9 +24,14 @@
                 <button *ngIf="!mobileMode" mat-icon-button class="toggleBTN" (click)="drawer.toggle()">
                     <mat-icon>menu</mat-icon>
                 </button>
-                <button mat-icon-button class="logoutBTN" (click)="logout()">
-                    <mat-icon>logout</mat-icon>
-                </button>
+                <div>
+                    <button mat-icon-button>
+                        <mat-icon>person</mat-icon>
+                    </button>
+                    <button mat-icon-button class="logoutBTN" (click)="logout()">
+                        <mat-icon>logout</mat-icon>
+                    </button>
+                </div>
             </mat-card-content>
         </mat-card>
         <router-outlet></router-outlet>
