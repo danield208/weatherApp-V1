@@ -30,10 +30,17 @@ const routes: Routes = [
     canActivate: [RouterAuthGuard],
     children: [
       {
-        path: ":id",
+        path: "info/:id",
         loadComponent: () =>
           import("./_components/home/infoscreen/infoscreen.component").then(
             (m) => m.InfoscreenComponent
+          ),
+      },
+      {
+        path: "user",
+        loadComponent: () =>
+          import("./_components/userscreen/userscreen.component").then(
+            (m) => m.UserscreenComponent
           ),
       },
       {

@@ -62,7 +62,7 @@ export class InfoSmallComponent implements OnInit, OnDestroy {
   }
 
   openDetails() {
-    this.router.navigate([this.location], { relativeTo: this.route });
+    this.router.navigate(["info/" + this.location], { relativeTo: this.route });
   }
 
   getApiData(): void {

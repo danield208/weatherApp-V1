@@ -1,5 +1,5 @@
 import { Component, Renderer2, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { APIDataService } from "../../_service/api-data.service";
 import { WeatherAPIService } from "../../_service/weather-api.service";
 import { GeolocationService } from "../../_service/geolocation.service";
@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
     private api: WeatherAPIService,
     private data: APIDataService,
     private router: Router,
+    private route: ActivatedRoute,
     public geo: GeolocationService,
     public user: UserService,
     private rd2: Renderer2
@@ -58,5 +59,9 @@ export class HomeComponent implements OnInit {
       localStorage.removeItem("user");
       this.router.navigateByUrl("/start");
     } else this.router.navigateByUrl("/start");
+  }
+
+  showUserScreen() {
+    this.router.navigate(["user"], { relativeTo: this.route });
   }
 }
