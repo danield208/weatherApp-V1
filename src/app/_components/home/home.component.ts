@@ -5,6 +5,7 @@ import { WeatherAPIService } from "../../_service/weather-api.service";
 import { GeolocationService } from "../../_service/geolocation.service";
 import { UserService } from "../../_service/user.service";
 import { Subscription, filter } from "rxjs";
+import { DatabaseService } from "../../_service/database.service";
 
 @Component({
   selector: "app-home",
@@ -20,6 +21,7 @@ export class HomeComponent implements OnInit {
   mobileMode: boolean = false;
   routeInArray: Array<string> = [];
   routeID!: string | undefined;
+  routeIdInCitiesArray!: boolean;
 
   constructor(
     private api: WeatherAPIService,
@@ -28,7 +30,8 @@ export class HomeComponent implements OnInit {
     private route: ActivatedRoute,
     public geo: GeolocationService,
     public user: UserService,
-    private rd2: Renderer2
+    private rd2: Renderer2,
+    private database: DatabaseService
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +52,9 @@ export class HomeComponent implements OnInit {
       .subscribe((res) => {
         this.routeInArray = res.url.split("/");
         this.routeID = this.routeInArray.at(-1);
+        if (this.user.User.savedcities.includes(this.routeID)) {
+          this.routeIdInCitiesArray = true;
+        } else this.routeIdInCitiesArray = false;
       });
   }
 
@@ -74,6 +80,17 @@ export class HomeComponent implements OnInit {
   }
 
   deleteItem() {
-    console.log(this.routeID);
+    let index = -1;
+    this.user.User.savedcities.forEach((city: any) => {
+      index++;
+      if (city == this.routeID) {
+        this.user.User.savedcities.splice(index, 1);
+      }
+    });
+    this.database
+      .updateSavedCities({ savedcities: this.user.User.savedcities })
+      .subscribe((res: any) => {
+        // console.log(res);
+      });
   }
 }

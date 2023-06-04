@@ -44,7 +44,7 @@ export class SaveCityFormComponent implements OnInit {
       this.database
         .updateSavedCities({ savedcities: this.user.User.savedcities })
         .subscribe((result) => {
-          console.log(result);
+          // console.log(result);
         });
     }
     this.searchCityForm.reset();
