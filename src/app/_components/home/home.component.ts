@@ -1,10 +1,10 @@
 import { Component, Renderer2, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router, RouterEvent, Event } from "@angular/router";
 import { APIDataService } from "../../_service/api-data.service";
 import { WeatherAPIService } from "../../_service/weather-api.service";
 import { GeolocationService } from "../../_service/geolocation.service";
 import { UserService } from "../../_service/user.service";
-import { Subscription } from "rxjs";
+import { Subscription, filter } from "rxjs";
 
 @Component({
   selector: "app-home",
@@ -18,11 +18,13 @@ export class HomeComponent implements OnInit {
   geoLoaded: boolean = false;
   geoSubscription!: Subscription;
   mobileMode: boolean = false;
+  routeInArray: Array<string> = [];
+  routeID!: string | undefined;
 
   constructor(
     private api: WeatherAPIService,
     private data: APIDataService,
-    private router: Router,
+    public router: Router,
     private route: ActivatedRoute,
     public geo: GeolocationService,
     public user: UserService,
@@ -42,10 +44,16 @@ export class HomeComponent implements OnInit {
         if (response) this.geoLoaded = true;
       }
     );
+    this.router.events
+      .pipe(filter((e: Event): e is RouterEvent => e instanceof RouterEvent))
+      .subscribe((res) => {
+        this.routeInArray = res.url.split("/");
+        this.routeID = this.routeInArray.at(-1);
+      });
   }
 
   renderListeners() {
-    this.rd2.listen("window", "resize", (event) => {
+    this.rd2.listen("window", "resize", () => {
       this.checkForMobileWidth();
     });
   }
@@ -63,5 +71,9 @@ export class HomeComponent implements OnInit {
 
   showUserScreen() {
     this.router.navigate(["user"], { relativeTo: this.route });
+  }
+
+  deleteItem() {
+    console.log(this.routeID);
   }
 }

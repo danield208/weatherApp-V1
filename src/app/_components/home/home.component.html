@@ -25,6 +25,12 @@
                     <mat-icon>menu</mat-icon>
                 </button>
                 <div>
+                    <button *ngIf="routeInArray.length === 4 || routeID == 'user'" (click)="router.navigateByUrl('/home')" mat-icon-button>
+                        <mat-icon *ngIf="routeInArray.length === 4">close</mat-icon>
+                        <mat-icon *ngIf="routeID == 'user'">home</mat-icon>
+                    </button>
+                    <button *ngIf="routeInArray.length === 4"  mat-icon-button color="warn" (click)="deleteItem()"><mat-icon>delete</mat-icon></button>
+                    <span *ngIf="routeInArray.length === 4 || routeID == 'user'">|</span>
                     <button mat-icon-button (click)="showUserScreen()">
                         <mat-icon>person</mat-icon>
                     </button>

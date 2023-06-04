@@ -35,6 +35,18 @@
 		display: flex;
 		justify-content: space-between;
 		padding: 0;
+
+		div {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+
+			span {
+				margin: 0 12px;
+				font-size: 24px;
+			}
+		}
 	}
 }
 
