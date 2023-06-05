@@ -4,11 +4,16 @@
     <main>
         <div class="windStatus flex flexColumn">
             <p>Wind Status</p>
-            <p>Graph D:</p>
-            <div>
-                <span>8<p>km/h</p></span>
-                <p>5:01 am</p>
+            <div class="compass">
+                <p>N</p>
+                <div>
+                    <p>W</p>
+                    <mat-icon [style.rotate]="windDirecDeg">navigation</mat-icon>
+                    <p>O</p>
+                </div>
+                <p>S</p>
             </div>
+            <span>8 <span>km/h</span></span>
         </div>
 
         <div class="humidity flex flexColumn">

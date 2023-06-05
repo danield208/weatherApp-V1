@@ -42,6 +42,10 @@ main {
   .windStatus, .uvIndex, .sunriseSunset {
     height: 100%;
     width: 100%;
+    padding: 18px 0;
+    justify-content: space-between;
+    border-bottom: 1px white solid;
+    margin-bottom: 18px;
   }
 
   .humidity, .visibility, .feelsLike {
@@ -52,16 +56,34 @@ main {
 
 .windStatus {
   width: 100%;
+
  div {
    display: flex;
    align-items: center;
    justify-content: center;
+
    span {
      display: flex;
      align-items: center;
      justify-content: center;
    }
  }
+
+  .compass {
+    flex-direction: column;
+    gap: 4px;
+
+    .mat-icon {
+      margin: 4px;
+    }
+
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+    }
+  }
 }
 
 .humidity {
