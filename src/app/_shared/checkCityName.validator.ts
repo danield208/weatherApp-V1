@@ -10,13 +10,11 @@ export class checkCityNameValidator implements AsyncValidator {
   validate = (control: AbstractControl) => {
     const { value } = control;
     return this.api.getData(value).pipe(
-      //   errors skip the map(). if we return null, means we got 200 response code
       map(() => {
         return null;
       }),
       catchError((err) => {
         if (err.error.token) {
-          //catchError has to return a new Observable and "of" is a shortcut
           return of({ cityFound: true });
         }
         return of({ cityFound: true });

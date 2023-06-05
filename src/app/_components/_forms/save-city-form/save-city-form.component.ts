@@ -4,7 +4,6 @@ import { WeatherAPIService } from "../../../_service/weather-api.service";
 import { checkCityNameValidator } from "../../../_shared/checkCityName.validator";
 import { UserService } from "../../../_service/user.service";
 import { DatabaseService } from "../../../_service/database.service";
-import { UserdataModel } from "../../../_model/userdata.model";
 
 @Component({
   selector: "app-save-city-form",
@@ -38,16 +37,27 @@ export class SaveCityFormComponent implements OnInit {
 
   saveNewCity(): void {
     const inputValue: any = this.searchCityForm.controls["cityname"].value;
-    if (!this.checkIfDoubleCity(inputValue)) {
-      this.inputCityField.nativeElement.blur();
-      this.user.User.savedcities.push(inputValue);
-      this.database
-        .updateSavedCities({ savedcities: this.user.User.savedcities })
-        .subscribe((result) => {
-          // console.log(result);
-        });
-    }
+    this.api.autoCompleteAPI(inputValue).subscribe((result) => {
+      const resCity = result[0].name.split(" ")[0];
+      if (!this.checkIfDoubleCity(resCity)) {
+        this.pushNewCity(resCity);
+        this.addToDatabase();
+        this.inputCityField.nativeElement.blur();
+      }
+    });
     this.searchCityForm.reset();
+  }
+
+  pushNewCity(newCity: string) {
+    this.user.User.savedcities.push(newCity);
+  }
+
+  addToDatabase() {
+    this.database
+      .updateSavedCities({ savedcities: this.user.User.savedcities })
+      .subscribe((result) => {
+        // console.log(result);
+      });
   }
 
   checkIfDoubleCity(newCity: string) {

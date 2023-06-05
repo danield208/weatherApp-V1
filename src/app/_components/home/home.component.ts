@@ -92,5 +92,6 @@ export class HomeComponent implements OnInit {
       .subscribe((res: any) => {
         // console.log(res);
       });
+    this.router.navigateByUrl("/home");
   }
 }

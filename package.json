@@ -1,6 +1,6 @@
 {
   "name": "weather-app-v1",
-  "version": "2.2.3",
+  "version": "2.3.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
