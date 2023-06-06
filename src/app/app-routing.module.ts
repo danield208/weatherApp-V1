@@ -9,6 +9,19 @@ import { HomeComponent } from "./_components/home/home.component";
 
 // routes
 import { StartscreenRoutes } from "./_components/startscreen/startscreen-routing.module";
+import { animate, style, transition, trigger } from "@angular/animations";
+import { InfoPlaceholderComponent } from "./_components/info-placeholder/info-placeholder.component";
+
+const animation = trigger("fadeIn", [
+  transition(":enter", [
+    style({ opacity: 0 }),
+    animate("225ms", style({ opacity: 1 })),
+  ]),
+  transition(":leave", [
+    style({ opacity: 1 }),
+    animate("225ms", style({ opacity: 0 })),
+  ]),
+]);
 
 const routes: Routes = [
   {
@@ -35,6 +48,11 @@ const routes: Routes = [
           import("./_components/home/infoscreen/infoscreen.component").then(
             (m) => m.InfoscreenComponent
           ),
+        data: { animation: animation },
+      },
+      {
+        path: "info",
+        component: InfoPlaceholderComponent,
       },
       {
         path: "user",

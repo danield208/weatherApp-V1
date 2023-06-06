@@ -1,8 +1,6 @@
 import { Injectable, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, Observable, Subscription } from "rxjs";
-import { GeolocationService } from "./geolocation.service";
-import { APIDataService } from "./api-data.service";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -45,11 +43,7 @@ export class WeatherAPIService implements OnInit {
     yesterday: {},
   };
 
-  constructor(
-    private http: HttpClient,
-    private geo: GeolocationService,
-    private data: APIDataService
-  ) {
+  constructor(private http: HttpClient) {
     this.apiLoadFinished = new BehaviorSubject<boolean>(false);
     this.getYesterday();
   }
@@ -78,7 +72,7 @@ export class WeatherAPIService implements OnInit {
           ("/" + type + ".json") +
           this.API_Key +
           ("&q=" + location) +
-          this.languages.de +
+          this.languages.en +
           ("&dt=" + yesterday)
       );
     } else {
@@ -88,7 +82,7 @@ export class WeatherAPIService implements OnInit {
           this.API_Key +
           ("&q=" + location) +
           ("&days=" + this.forecast_Days) +
-          this.languages.de +
+          this.languages.en +
           "&aqi=no&alerts=no"
       );
     }

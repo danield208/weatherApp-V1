@@ -62,7 +62,18 @@ export class InfoSmallComponent implements OnInit, OnDestroy {
   }
 
   openDetails() {
-    this.router.navigate(["info/" + this.location], { relativeTo: this.route });
+    if (this.router.url.split("/").length > 2) {
+      this.router.navigate(["/home/info"]);
+      setTimeout(() => {
+        this.router.navigate(["info/" + this.location], {
+          relativeTo: this.route,
+        });
+      }, 125);
+    } else {
+      this.router.navigate(["info/" + this.location], {
+        relativeTo: this.route,
+      });
+    }
   }
 
   getApiData(): void {

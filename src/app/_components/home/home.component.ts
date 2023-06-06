@@ -1,16 +1,24 @@
 import { Component, Renderer2, OnInit } from "@angular/core";
-import { ActivatedRoute, Router, RouterEvent, Event } from "@angular/router";
+import {
+  ActivatedRoute,
+  Router,
+  RouterEvent,
+  Event,
+  RouterOutlet,
+} from "@angular/router";
 import { APIDataService } from "../../_service/api-data.service";
 import { WeatherAPIService } from "../../_service/weather-api.service";
 import { GeolocationService } from "../../_service/geolocation.service";
 import { UserService } from "../../_service/user.service";
 import { Subscription, filter } from "rxjs";
 import { DatabaseService } from "../../_service/database.service";
+import { fadeInAnimation } from "../../_animations/index.animation";
 
 @Component({
   selector: "app-home",
   templateUrl: "home.component.html",
   styleUrls: ["./home.component.scss"],
+  animations: [fadeInAnimation],
 })
 export class HomeComponent implements OnInit {
   location!: any;
@@ -34,28 +42,20 @@ export class HomeComponent implements OnInit {
     private database: DatabaseService
   ) {}
 
+  prepareRoute(outlet: RouterOutlet) {
+    return (
+      outlet &&
+      outlet.activatedRouteData &&
+      outlet.activatedRouteData["animation"]
+    );
+  }
+
   ngOnInit(): void {
     this.renderListeners();
     this.checkForMobileWidth();
-    this.user.userInitCompleted.subscribe((resp: boolean): void => {
-      if (resp) {
-        this.userLoaded = true;
-      }
-    });
-    this.geoSubscription = this.geo.locationLoaded.subscribe(
-      (response: boolean): void => {
-        if (response) this.geoLoaded = true;
-      }
-    );
-    this.router.events
-      .pipe(filter((e: Event): e is RouterEvent => e instanceof RouterEvent))
-      .subscribe((res) => {
-        this.routeInArray = res.url.split("/");
-        this.routeID = this.routeInArray.at(-1);
-        if (this.user.User.savedcities.includes(this.routeID)) {
-          this.routeIdInCitiesArray = true;
-        } else this.routeIdInCitiesArray = false;
-      });
+    this.subscribeUserInit();
+    this.checkGeoLoaded();
+    this.subscribeRouterEvents();
   }
 
   renderListeners() {
@@ -66,6 +66,34 @@ export class HomeComponent implements OnInit {
 
   checkForMobileWidth() {
     window.innerWidth < 1200 ? (this.showSidenav = false) : true;
+  }
+
+  subscribeUserInit() {
+    this.user.userInitCompleted.subscribe((resp: boolean): void => {
+      if (resp) {
+        this.userLoaded = true;
+      }
+    });
+  }
+
+  checkGeoLoaded() {
+    this.geoSubscription = this.geo.locationLoaded.subscribe(
+      (response: boolean): void => {
+        if (response) this.geoLoaded = true;
+      }
+    );
+  }
+
+  subscribeRouterEvents() {
+    this.router.events
+      .pipe(filter((e: Event): e is RouterEvent => e instanceof RouterEvent))
+      .subscribe((res) => {
+        this.routeInArray = res.url.split("/");
+        this.routeID = this.routeInArray.at(-1);
+        if (this.user.User.savedcities.includes(this.routeID)) {
+          this.routeIdInCitiesArray = true;
+        } else this.routeIdInCitiesArray = false;
+      });
   }
 
   logout() {

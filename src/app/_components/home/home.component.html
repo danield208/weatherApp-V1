@@ -40,6 +40,8 @@
                 </div>
             </mat-card-content>
         </mat-card>
-        <router-outlet></router-outlet>
+        <div class="routerOutlet" [@fadeIn]="prepareRoute(outlet)">
+            <router-outlet #outlet="outlet"></router-outlet>
+        </div>
     </mat-drawer-content>
 </mat-drawer-container>

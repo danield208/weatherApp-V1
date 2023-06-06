@@ -32,6 +32,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { InfoSmallComponent } from "./_components/home/info-small/info-small.component";
+import { InfoPlaceholderComponent } from './_components/info-placeholder/info-placeholder.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { InfoSmallComponent } from "./_components/home/info-small/info-small.com
     ImprintComponent,
     InfoSmallComponent,
     HomeComponent,
+    InfoPlaceholderComponent,
   ],
   imports: [
     BrowserModule,
