@@ -21,9 +21,7 @@ export class ForecastComponent implements OnInit, OnChanges {
     this.initModule();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    this.initModule();
-  }
+  ngOnChanges(changes: SimpleChanges) {}
   initModule() {}
 
   getWeekday(date: string): string {

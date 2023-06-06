@@ -65,7 +65,9 @@ export class HomeComponent implements OnInit {
   }
 
   checkForMobileWidth() {
-    window.innerWidth < 1200 ? (this.showSidenav = false) : true;
+    window.innerWidth < 1200
+      ? (this.showSidenav = false)
+      : (this.showSidenav = true);
   }
 
   subscribeUserInit() {

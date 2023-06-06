@@ -20,34 +20,32 @@ export class CurrentHighlightsComponent implements OnInit, OnChanges {
   public windDirecDeg: string = "120deg";
 
   windDirections: any = {
-    N: "0deg",
-    NNE: "22.5deg",
-    NE: "45deg",
-    ENE: "67.5deg",
-    E: "90deg",
-    ESE: "112.5deg",
-    SE: "135deg",
-    SSE: "157.5deg",
-    S: "180deg",
-    SSW: "202.5deg",
-    SW: "225deg",
-    WSW: "247.5deg",
-    W: "270deg",
-    WNW: "292.5deg",
-    NW: "315deg",
-    NNW: "337.5",
+    N: "180deg",
+    NNE: "202.5deg",
+    NE: "225deg",
+    ENE: "274.5deg",
+    E: "270deg",
+    ESE: "292.5deg",
+    SE: "315deg",
+    SSE: "337.5deg",
+    S: "0deg",
+    SSW: "22.5deg",
+    SW: "45deg",
+    WSW: "67.5deg",
+    W: "90deg",
+    WNW: "112.5deg",
+    NW: "135deg",
+    NNW: "157.5deg",
   };
 
   constructor() {}
 
   ngOnInit() {
     this.initModule();
-    console.log(this.data);
+    // console.log(this.data);
   }
 
-  ngOnChanges() {
-    this.initModule();
-  }
+  ngOnChanges() {}
 
   initModule() {
     this.setCompassDirection();

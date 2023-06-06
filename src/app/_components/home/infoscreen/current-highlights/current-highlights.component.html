@@ -13,17 +13,13 @@
                 </div>
                 <p>S</p>
             </div>
-            <span>8 <span>km/h</span></span>
+            <span>{{ data.wind_kph }} <span>km/h</span></span>
         </div>
 
         <div class="humidity flex flexColumn">
             <p>Humidity</p>
             <div class="flex">
-                <span class="flex">84<p>%</p></span>
-                <div class="flex">
-                    <img src="#" alt="#">
-                    <p>The dew point is 27o right now</p>
-                </div>
+                <span class="flex">{{ data.humidity }}<p>%</p></span>
             </div>
         </div>
     </main>
@@ -32,12 +28,12 @@
         <div class="uvIndex flex flexColumn">
             <p>UV Index</p>
             <p>Graph D:</p>
-            <span>5.50 <span>uv</span></span>
+            <span>{{ data.uv }} <span>uv</span></span>
         </div>
 
-        <div class="visibility flex">
-            <p>Visibility</p>
-            <span>03<p>km</p></span>
+        <div class="visibility flex flexColumn">
+            <p>Total Precip</p>
+            <span>{{ data.forecastday[0].day.totalprecip_mm }} <span>mm</span></span>
         </div>
     </main>
 
@@ -49,13 +45,7 @@
 
         <div class="feelsLike flex flexColumn">
             <p>Feels Like</p>
-            <div class="flex">
-                <div class="flex">
-                    <img src="#" alt="#">
-                    <p>42C</p>
-                </div>
-                <p>Humidity is making it feel hotter</p>
-            </div>
+            <span>{{ data.feelslike_c }}&#176;C</span>
         </div>
     </main>
 </content>

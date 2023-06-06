@@ -30,11 +30,7 @@ export class CurrentTodayComponent implements OnInit, OnChanges {
     this.initModule();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    this.imgLoading = true;
-    this.initModule();
-  }
-
+  ngOnChanges(changes: SimpleChanges) {}
   initModule() {
     this.setValues();
     this.setImgCondition();
