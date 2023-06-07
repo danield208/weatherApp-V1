@@ -6,13 +6,13 @@ import { BehaviorSubject, Observable } from "rxjs";
   providedIn: "root",
 })
 export class WeatherAPIService implements OnInit {
-  baseURL = "https://api.weatherapi.com/v1";
-  API_Key = "?key=cce16babc3924c04bcb130127230703";
+  baseURL: string = "https://api.weatherapi.com/v1";
+  API_Key: string = "?key=cce16babc3924c04bcb130127230703";
   languages: any = {
     de: "&lang=de",
     en: "&lang=en",
   };
-  airQualitiyDataInForecast: any = {
+  airQualityDataInForecast: any = {
     yes: "&aqi=yes",
     no: "&aqi=no",
   };
@@ -21,25 +21,9 @@ export class WeatherAPIService implements OnInit {
     fore: "/forecast.json",
     search: "/search.json",
   };
-
-  // Forecast Info
   forecast_Days: number = 3;
-  forecastAlerts: string = "&alerts=no";
-
-  // history
   yesterday!: any;
-
-  // booleans for init
   apiLoadFinished!: BehaviorSubject<boolean>;
-
-  // dataModel for location data
-  dataModel = {
-    coords: "",
-    current: {},
-    forecastday: {},
-    location: {},
-    yesterday: {},
-  };
 
   constructor(private http: HttpClient) {
     this.apiLoadFinished = new BehaviorSubject<boolean>(false);

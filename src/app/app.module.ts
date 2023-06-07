@@ -16,9 +16,9 @@ import { SaveCityFormComponent } from "./_components/_forms/save-city-form/save-
 
 // services
 import { GeolocationService } from "./_service/geolocation.service";
-import { APIDataService } from "./_service/api-data.service";
 import { UserService } from "./_service/user.service";
 import { DatabaseService } from "./_service/database.service";
+import { SavedWeatherDataService } from "./_service/savedWeatherData.service";
 
 // guards
 import { RouterAuthGuard } from "./_guard/router.guard";
@@ -32,7 +32,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { InfoSmallComponent } from "./_components/home/info-small/info-small.component";
-import { InfoPlaceholderComponent } from './_components/info-placeholder/info-placeholder.component';
+import { InfoPlaceholderComponent } from "./_components/info-placeholder/info-placeholder.component";
 
 @NgModule({
   declarations: [
@@ -61,10 +61,10 @@ import { InfoPlaceholderComponent } from './_components/info-placeholder/info-pl
   ],
   providers: [
     GeolocationService,
-    APIDataService,
     UserService,
     DatabaseService,
     RouterAuthGuard,
+    SavedWeatherDataService,
   ],
   bootstrap: [AppComponent],
   exports: [SaveCityFormComponent],

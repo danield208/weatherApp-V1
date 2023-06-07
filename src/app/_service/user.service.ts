@@ -8,7 +8,6 @@ import {
 } from "firebase/auth";
 import { BehaviorSubject } from "rxjs";
 import { DatabaseService } from "./database.service";
-import { APIDataService } from "./api-data.service";
 import { UserdataModel } from "../_model/userdata.model";
 import { Router } from "@angular/router";
 
@@ -36,11 +35,7 @@ export class UserService {
     false
   );
 
-  constructor(
-    private database: DatabaseService,
-    private data: APIDataService,
-    private router: Router
-  ) {
+  constructor(private database: DatabaseService, private router: Router) {
     if (localStorage.getItem("user")) {
       const userStr: any = localStorage.getItem("user");
       const userObj = JSON.parse(userStr);

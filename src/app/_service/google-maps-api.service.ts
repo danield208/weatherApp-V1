@@ -31,5 +31,3 @@ export class GoogleMapsApiService {
     );
   }
 }
-
-// responseType: "blob"

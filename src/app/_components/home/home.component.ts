@@ -6,7 +6,6 @@ import {
   Event,
   RouterOutlet,
 } from "@angular/router";
-import { APIDataService } from "../../_service/api-data.service";
 import { WeatherAPIService } from "../../_service/weather-api.service";
 import { GeolocationService } from "../../_service/geolocation.service";
 import { UserService } from "../../_service/user.service";
@@ -33,7 +32,6 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private api: WeatherAPIService,
-    private data: APIDataService,
     public router: Router,
     private route: ActivatedRoute,
     public geo: GeolocationService,

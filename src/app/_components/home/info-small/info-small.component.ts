@@ -4,7 +4,7 @@ import { WeatherdataModel } from "../../../_model/weatherdata.model";
 import { Subscription, timer } from "rxjs";
 import { map, share } from "rxjs/operators";
 import { ActivatedRoute, Router } from "@angular/router";
-import { APIDataService } from "../../../_service/api-data.service";
+import { SavedWeatherDataService } from "../../../_service/savedWeatherData.service";
 
 @Component({
   selector: "app-info-small",
@@ -49,7 +49,7 @@ export class InfoSmallComponent implements OnInit, OnDestroy {
     private api: WeatherAPIService,
     private router: Router,
     private route: ActivatedRoute,
-    private data: APIDataService
+    private savedData: SavedWeatherDataService
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +82,7 @@ export class InfoSmallComponent implements OnInit, OnDestroy {
       this.weatherData = new WeatherdataModel(result);
       this.api.getData(this.location, "history").subscribe((result) => {
         this.weatherData.yesterday = result.forecast.forecastday[0];
-        this.data.loadedWeatherData[this.location] = this.weatherData;
+        this.savedData.savedWeatherData[this.location] = this.weatherData;
         this.showLoader = false;
       });
       this.setTime();

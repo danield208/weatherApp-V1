@@ -1,11 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { APIDataService } from "../../../_service/api-data.service";
 import { CurrentTodayComponent } from "./current-today/current-today.component";
 import { ForecastComponent } from "./forecast/forecast.component";
 import { CurrentHighlightsComponent } from "./current-highlights/current-highlights.component";
 import { CommonModule } from "@angular/common";
 import { GoogleMapsApiService } from "../../../_service/google-maps-api.service";
+import { WeatherAPIService } from "../../../_service/weather-api.service";
+import { SavedWeatherDataService } from "../../../_service/savedWeatherData.service";
 
 @Component({
   selector: "app-infoscreen",
@@ -28,8 +29,9 @@ export class InfoscreenComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private data: APIDataService,
-    private places: GoogleMapsApiService
+    private places: GoogleMapsApiService,
+    private api: WeatherAPIService,
+    private savedData: SavedWeatherDataService
   ) {}
 
   ngOnInit() {
@@ -72,7 +74,7 @@ export class InfoscreenComponent implements OnInit {
 
   getValues() {
     this.coordinates = this.route.snapshot.paramMap.get("id");
-    this.currentData = this.data.loadedWeatherData[this.coordinates];
+    this.currentData = this.savedData.savedWeatherData[this.coordinates];
   }
 }
 
