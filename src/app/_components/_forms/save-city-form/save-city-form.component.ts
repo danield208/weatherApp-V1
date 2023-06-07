@@ -55,11 +55,8 @@ export class SaveCityFormComponent implements OnInit {
   addToDatabase() {
     this.database
       .updateSavedCities({ savedcities: this.user.User.savedcities })
-      .subscribe((result) => {
-        // console.log(result);
-      });
+      .subscribe(() => {});
   }
-
   checkIfDoubleCity(newCity: string) {
     return this.user.User.savedcities.includes(newCity);
   }

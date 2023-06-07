@@ -32,8 +32,6 @@ export class WeatherAPIService implements OnInit {
   // booleans for init
   apiLoadFinished!: BehaviorSubject<boolean>;
 
-  runningTasks: Array<any> = [];
-
   // dataModel for location data
   dataModel = {
     coords: "",
@@ -52,12 +50,12 @@ export class WeatherAPIService implements OnInit {
 
   // main functions
   getYesterday() {
-    let current = new Date();
-    let yesterday = new Date(current.getTime());
+    const current = new Date();
+    const yesterday = new Date(current.getTime());
     yesterday.setDate(current.getDate() - 1);
-    let year = String(yesterday.getFullYear());
-    let month = ("0" + (yesterday.getUTCMonth() + 1)).slice(-2);
-    let day = String(yesterday.getDate());
+    const year = String(yesterday.getFullYear());
+    const month = ("0" + (yesterday.getUTCMonth() + 1)).slice(-2);
+    const day = String(yesterday.getDate());
     return year + "-" + month + "-" + day;
   }
 

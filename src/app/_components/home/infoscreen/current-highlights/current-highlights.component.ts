@@ -1,12 +1,7 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { MatIconModule } from "@angular/material/icon";
+import { WeatherdataModel } from "../../../../_model/weatherdata.model";
 
 @Component({
   selector: "app-current-highlights",
@@ -15,8 +10,8 @@ import { MatIconModule } from "@angular/material/icon";
   standalone: true,
   imports: [CommonModule, MatIconModule],
 })
-export class CurrentHighlightsComponent implements OnInit, OnChanges {
-  @Input("currentData") data!: any;
+export class CurrentHighlightsComponent implements OnInit {
+  @Input("currentData") data!: WeatherdataModel;
   public windDirecDeg: string = "120deg";
 
   windDirections: any = {
@@ -38,14 +33,9 @@ export class CurrentHighlightsComponent implements OnInit, OnChanges {
     NNW: "157.5deg",
   };
 
-  constructor() {}
-
   ngOnInit() {
     this.initModule();
-    // console.log(this.data);
   }
-
-  ngOnChanges() {}
 
   initModule() {
     this.setCompassDirection();

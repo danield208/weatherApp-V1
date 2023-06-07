@@ -35,23 +35,23 @@ export class InfoscreenComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(() => {
       this.getValues();
-      this.places
-        .googleFindPlace(this.currentData.location.name.replace(" ", "%20"))
-        .subscribe((resolve) => {
-          this.isImageLoading = true;
-          this.places
-            .googleGetPicture(resolve.candidates[0].photos[0].photo_reference)
-            .subscribe(
-              (data) => {
-                this.createImageFromBlob(data);
-                this.isImageLoading = false;
-              },
-              (error) => {
-                this.isImageLoading = false;
-                console.error(error);
-              }
-            );
-        });
+      //this.places
+      //  .googleFindPlace(this.currentData.location.name.replace(" ", "%20"))
+      //  .subscribe((resolve) => {
+      //    this.isImageLoading = true;
+      //    this.places
+      //      .googleGetPicture(resolve.candidates[0].photos[0].photo_reference)
+      //      .subscribe(
+      //        (data) => {
+      //          this.createImageFromBlob(data);
+      //          this.isImageLoading = false;
+      //        },
+      //        (error) => {
+      //          this.isImageLoading = false;
+      //          console.error(error);
+      //        }
+      //      );
+      //  });
     });
   }
 
@@ -75,3 +75,6 @@ export class InfoscreenComponent implements OnInit {
     this.currentData = this.data.loadedWeatherData[this.coordinates];
   }
 }
+
+// <img class="backgroundIMG" [src]="imageToShow" *ngIf="!isImageLoading">
+// <div class="blur"></div>

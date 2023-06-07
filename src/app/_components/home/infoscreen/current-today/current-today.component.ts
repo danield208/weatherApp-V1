@@ -1,11 +1,6 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { CommonModule, NgOptimizedImage } from "@angular/common";
+import { WeatherdataModel } from "../../../../_model/weatherdata.model";
 
 @Component({
   selector: "app-current-today",
@@ -14,8 +9,8 @@ import { CommonModule, NgOptimizedImage } from "@angular/common";
   standalone: true,
   imports: [CommonModule, NgOptimizedImage],
 })
-export class CurrentTodayComponent implements OnInit, OnChanges {
-  @Input("currentData") public data!: any;
+export class CurrentTodayComponent implements OnInit {
+  @Input("currentData") public data!: WeatherdataModel;
   public imgIconCondition!: string;
   public imgLoading!: boolean;
   public conditionIcon!: string;
@@ -30,7 +25,6 @@ export class CurrentTodayComponent implements OnInit, OnChanges {
     this.initModule();
   }
 
-  ngOnChanges(changes: SimpleChanges) {}
   initModule() {
     this.setValues();
     this.setImgCondition();
@@ -41,12 +35,12 @@ export class CurrentTodayComponent implements OnInit, OnChanges {
   setValues() {
     this.conditionIcon = this.data ? this.data.condition.icon : "err";
     this.conditionText = this.data ? this.data.condition.text : "err";
-    this.temp = this.data ? this.data.temp_c : "err";
+    this.temp = this.data ? this.data.temp_c : 0;
     this.locationName = this.data ? this.data.location.name : "err";
     this.date = this.data
       ? new Date(this.data.location.localtime * 1000)
       : "err";
-    this.code = this.data ? this.data.condition.code : "err";
+    this.code = this.data ? this.data.condition.code : 0;
   }
 
   setImgCondition() {

@@ -10,8 +10,6 @@ import { BehaviorSubject } from "rxjs";
 import { DatabaseService } from "./database.service";
 import { APIDataService } from "./api-data.service";
 import { UserdataModel } from "../_model/userdata.model";
-import firebase from "firebase/compat";
-import UserCredential = firebase.auth.UserCredential;
 import { Router } from "@angular/router";
 
 @Injectable({
@@ -100,7 +98,7 @@ export class UserService {
       });
   }
 
-  loginWithKeepLogin(user: any): void {
+  loginWithKeepLogin(user: { uid: string; token: string }): void {
     this.database.get(user.uid, user.token).subscribe((result) => {
       this.User = new UserdataModel(result);
       this.userInitCompleted.next(true);
