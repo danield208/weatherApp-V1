@@ -1,15 +1,23 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ElementRef,
+  AfterViewInit,
+  ViewChild,
+} from "@angular/core";
 import { WeatherAPIService } from "../../../_service/weather-api.service";
 import { WeatherdataModel } from "../../../_model/weatherdata.model";
-import { Subscription, timer } from "rxjs";
+import { filter, Subscription, timer } from "rxjs";
 import { map, share } from "rxjs/operators";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { SavedWeatherDataService } from "../../../_service/savedWeatherData.service";
 
 @Component({
   selector: "app-info-small",
   template: `
-    <mat-card>
+    <mat-card #matCard>
       <mat-card-content *ngIf="weatherData" (click)="openDetails()">
         <div class="top">
           <div>
@@ -38,8 +46,9 @@ import { SavedWeatherDataService } from "../../../_service/savedWeatherData.serv
   styleUrls: ["info-small.component.scss"],
   providers: [WeatherAPIService],
 })
-export class InfoSmallComponent implements OnInit, OnDestroy {
+export class InfoSmallComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() location!: string;
+  @ViewChild("matCard", { read: ElementRef }) matCard!: ElementRef;
   weatherData!: WeatherdataModel;
   rxTime: Date = new Date();
   subscription!: Subscription;
@@ -59,6 +68,26 @@ export class InfoSmallComponent implements OnInit, OnDestroy {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+
+  ngAfterViewInit() {
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationEnd),
+        map(() => this.rootRoute(this.route)),
+        filter((route: ActivatedRoute) => route.outlet === "primary")
+      )
+      .subscribe((route: ActivatedRoute) => {
+        if (route.snapshot.paramMap.get("id") == this.location)
+          this.matCard.nativeElement.style.backgroundColor = "#595959";
+        else this.matCard.nativeElement.style.backgroundColor = "#424242";
+      });
+  }
+  private rootRoute(route: ActivatedRoute): ActivatedRoute {
+    while (route.firstChild) {
+      route = route.firstChild;
+    }
+    return route;
   }
 
   openDetails() {
