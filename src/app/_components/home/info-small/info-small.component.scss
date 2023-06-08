@@ -1,5 +1,13 @@
 :host {
   width: 100%;
+
+  &:hover {
+    cursor: pointer;
+
+    .mat-mdc-card {
+      border-color: #ffdf41;
+    }
+  }
 }
 
 .locationOff {
@@ -10,7 +18,8 @@
 }
 
 .mat-mdc-card {
-  border: 1px solid white;
+  transition: border-color 180ms ease-in-out;
+  border: 2px solid white;
   padding: 8px;
 }
 
