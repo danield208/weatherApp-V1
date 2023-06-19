@@ -1,33 +1,38 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
 })
 export class GoogleMapsApiService {
-  apiKey: string = "AIzaSyAyJrRpDMXMHjm3nAIJS7x02D2nPT9E9Kk";
-
   constructor(private http: HttpClient) {}
 
-  googleFindPlace(location: string): Observable<any> {
-    return this.http.get(
-      "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=" +
-        location +
-        "&inputtype=textquery&fields=photos,name&key=" +
-        this.apiKey
+  googlePlaces(locationname: string): Observable<Blob> {
+    let header: HttpHeaders = new HttpHeaders().set(
+      "locationname",
+      locationname
     );
+    header.set("mode", "no-cors");
+    return this.http.get("http://localhost:3000/googleplaces/placeInfo", {
+      headers: header,
+      responseType: "blob",
+    });
   }
 
-  googleGetPicture(photoReference: string): Observable<any> {
-    return this.http.get(
-      "https://maps.googleapis.com/maps/api/place/photo" +
-        "?maxwidth=1920&maxheight=1080" +
-        "&photo_reference=" +
-        photoReference +
-        "&key=" +
-        this.apiKey,
-      { responseType: "blob" }
-    );
+  createImageFromBlob(image: Blob): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (image === undefined) reject(true);
+      const reader: FileReader = new FileReader();
+      reader.addEventListener(
+        "load",
+        () => {
+          resolve(reader.result);
+        },
+        false
+      );
+
+      reader.readAsDataURL(image);
+    });
   }
 }

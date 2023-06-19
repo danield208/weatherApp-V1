@@ -31,6 +31,7 @@ export class WeatherdataModel {
   };
   forecastday: Array<any> = [];
   yesterday: { forecast: any; location: any };
+  locationImg!: string;
 
   constructor(obj?: any) {
     this.coords = obj ? obj.location.lat + "," + obj.location.lon : "";

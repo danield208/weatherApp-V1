@@ -17,7 +17,7 @@ import { SavedWeatherDataService } from "../../../_service/savedWeatherData.serv
 @Component({
   selector: "app-info-small",
   template: `
-    <mat-card #matCard>
+    <mat-card #matCard matRipple [matRippleUnbounded]="false">
       <mat-card-content *ngIf="weatherData" (click)="openDetails()">
         <div class="top">
           <div>
@@ -83,26 +83,11 @@ export class InfoSmallComponent implements OnInit, OnDestroy, AfterViewInit {
         else this.matCard.nativeElement.style.backgroundColor = "#424242";
       });
   }
-  private rootRoute(route: ActivatedRoute): ActivatedRoute {
+  rootRoute(route: ActivatedRoute): ActivatedRoute {
     while (route.firstChild) {
       route = route.firstChild;
     }
     return route;
-  }
-
-  openDetails() {
-    if (this.router.url.split("/").length > 2) {
-      this.router.navigate(["/home/info"]);
-      setTimeout(() => {
-        this.router.navigate(["info/" + this.location], {
-          relativeTo: this.route,
-        });
-      }, 125);
-    } else {
-      this.router.navigate(["info/" + this.location], {
-        relativeTo: this.route,
-      });
-    }
   }
 
   getApiData(): void {
@@ -129,5 +114,20 @@ export class InfoSmallComponent implements OnInit, OnDestroy, AfterViewInit {
         dataTime.setSeconds(dataTime.getSeconds() + 1);
         this.rxTime = time;
       });
+  }
+
+  openDetails() {
+    if (this.router.url.split("/").length > 2) {
+      this.router.navigate(["/home/info"]);
+      setTimeout(() => {
+        this.router.navigate(["info/" + this.location], {
+          relativeTo: this.route,
+        });
+      }, 125);
+    } else {
+      this.router.navigate(["info/" + this.location], {
+        relativeTo: this.route,
+      });
+    }
   }
 }

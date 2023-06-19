@@ -11,13 +11,11 @@ import { GeolocationService } from "../../_service/geolocation.service";
 import { UserService } from "../../_service/user.service";
 import { Subscription, filter } from "rxjs";
 import { DatabaseService } from "../../_service/database.service";
-import { fadeInAnimation } from "../../_animations/index.animation";
 
 @Component({
   selector: "app-home",
   templateUrl: "home.component.html",
   styleUrls: ["./home.component.scss"],
-  animations: [fadeInAnimation],
 })
 export class HomeComponent implements OnInit {
   location!: any;
@@ -39,14 +37,6 @@ export class HomeComponent implements OnInit {
     private rd2: Renderer2,
     private database: DatabaseService
   ) {}
-
-  prepareRoute(outlet: RouterOutlet) {
-    return (
-      outlet &&
-      outlet.activatedRouteData &&
-      outlet.activatedRouteData["animation"]
-    );
-  }
 
   ngOnInit(): void {
     this.renderListeners();
