@@ -11,7 +11,6 @@ import { FormsModule } from "@angular/forms";
 import { HomeComponent } from "./_components/home/home.component";
 import { ImprintComponent } from "./_components/imprint/imprint.component";
 import { InfoSmallComponent } from "./_components/home/info-small/info-small.component";
-import { InfoPlaceholderComponent } from "./_components/home/info-placeholder.component";
 
 //form components
 import { SaveCityFormComponent } from "./_components/_forms/save-city-form/save-city-form.component";
@@ -38,41 +37,40 @@ import { MatRippleModule } from "@angular/material/core";
 import { PagenotfoundComponent } from "./_components/pagenotfound/pagenotfound.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SaveCityFormComponent,
-    ImprintComponent,
-    InfoSmallComponent,
-    HomeComponent,
-    InfoPlaceholderComponent,
-    PagenotfoundComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
+	declarations: [
+		AppComponent,
+		SaveCityFormComponent,
+		ImprintComponent,
+		InfoSmallComponent,
+		HomeComponent,
+		PagenotfoundComponent,
+	],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		HttpClientModule,
+		FormsModule,
+		ReactiveFormsModule,
+		BrowserAnimationsModule,
 
-    //material design
-    MatSidenavModule,
-    MatButtonModule,
-    MatCardModule,
-    MatProgressBarModule,
-    MatIconModule,
-    MatInputModule,
-    MatRippleModule,
-  ],
-  providers: [
-    GeolocationService,
-    UserService,
-    DatabaseService,
-    RouterAuthGuard,
-    SavedWeatherDataService,
-    GoogleMapsApiService,
-  ],
-  bootstrap: [AppComponent],
-  exports: [SaveCityFormComponent],
+		//material design
+		MatSidenavModule,
+		MatButtonModule,
+		MatCardModule,
+		MatProgressBarModule,
+		MatIconModule,
+		MatInputModule,
+		MatRippleModule,
+	],
+	providers: [
+		GeolocationService,
+		UserService,
+		DatabaseService,
+		RouterAuthGuard,
+		SavedWeatherDataService,
+		GoogleMapsApiService,
+	],
+	bootstrap: [AppComponent],
+	exports: [SaveCityFormComponent],
 })
 export class AppModule {}

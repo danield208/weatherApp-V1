@@ -5,8 +5,6 @@ import { RouterModule, Routes } from "@angular/router";
 import { RouterAuthGuard } from "./_guard/router.guard";
 
 //components
-import { HomeComponent } from "./_components/home/home.component";
-import { InfoPlaceholderComponent } from "./_components/home/info-placeholder.component";
 import { PagenotfoundComponent } from "./_components/pagenotfound/pagenotfound.component";
 
 // routes
@@ -28,35 +26,9 @@ const routes: Routes = [
   },
   {
     path: "home",
-    component: HomeComponent,
+    loadChildren: () =>
+      import("./_components/home/home.module").then((m) => m.HomeModule),
     canActivate: [RouterAuthGuard],
-    children: [
-      {
-        path: "info/:id",
-        loadComponent: () =>
-          import("./_components/home/infoscreen/infoscreen.component").then(
-            (m) => m.InfoscreenComponent
-          ),
-      },
-      {
-        path: "info",
-        component: InfoPlaceholderComponent,
-      },
-      {
-        path: "user",
-        loadComponent: () =>
-          import("./_components/userscreen/userscreen.component").then(
-            (m) => m.UserscreenComponent
-          ),
-      },
-      {
-        path: "",
-        loadComponent: () =>
-          import(
-            "./_components/select-location/select-location.component"
-          ).then((m) => m.SelectLocationComponent),
-      },
-    ],
   },
   {
     path: "**",

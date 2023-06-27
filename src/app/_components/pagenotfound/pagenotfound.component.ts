@@ -5,9 +5,7 @@ import { Router } from "@angular/router";
   selector: "app-pagenotfound",
   template: `
     <h1>Page not found!</h1>
-    <button routerLink="/start" mat-raised-button color="primary">
-      Return
-    </button>
+    <button routerLink="/home" mat-raised-button color="primary">Return</button>
   `,
   styleUrls: ["./pagenotfound.component.scss"],
 })

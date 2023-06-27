@@ -4,7 +4,7 @@
         <img src="https:{{ day.day.condition.icon }}" alt="#" [height]="24" [width]="24">
         <span>{{ day.day.maxtemp_c }}&#176;&#160;/<p>&#160;{{ day.day.mintemp_c }}</p></span>
         <p>{{ day.date }}</p>
-        <p>{{ getWeekday(day.date) }}</p>
+        <p>{{ day.weekday }}</p>
     </div>
 
     <div class="tomorrow">

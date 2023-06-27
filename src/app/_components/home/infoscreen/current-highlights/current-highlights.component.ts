@@ -7,8 +7,6 @@ import { WeatherdataModel } from "../../../../_model/weatherdata.model";
   selector: "app-current-highlights",
   templateUrl: "./current-highlights.component.html",
   styleUrls: ["./current-highlights.component.scss"],
-  standalone: true,
-  imports: [CommonModule, MatIconModule],
 })
 export class CurrentHighlightsComponent implements OnInit {
   @Input("currentData") data!: WeatherdataModel;

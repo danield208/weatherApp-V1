@@ -6,8 +6,6 @@ import { WeatherdataModel } from "../../../../_model/weatherdata.model";
   selector: "app-current-today",
   templateUrl: "./current-today.component.html",
   styleUrls: ["./current-today.component.scss"],
-  standalone: true,
-  imports: [CommonModule, NgOptimizedImage],
 })
 export class CurrentTodayComponent implements OnInit {
   @Input("currentData") public data!: WeatherdataModel;
@@ -37,9 +35,6 @@ export class CurrentTodayComponent implements OnInit {
     this.conditionText = this.data ? this.data.condition.text : "err";
     this.temp = this.data ? this.data.temp_c : 0;
     this.locationName = this.data ? this.data.location.name : "err";
-    this.date = this.data
-      ? new Date(this.data.location.localtime * 1000)
-      : "err";
     this.code = this.data ? this.data.condition.code : 0;
   }
 
@@ -49,7 +44,17 @@ export class CurrentTodayComponent implements OnInit {
   }
 
   setDate() {
+    const currentDate = new Date(this.data.location.localtime * 1000);
     this.date =
-      this.date.getDay() + this.date.getMonth() + (this.date.getYear() + 1);
+      currentDate.getDate() +
+      "." +
+      this.checkMonthNumber(currentDate.getUTCMonth()) +
+      "." +
+      currentDate.getUTCFullYear();
+  }
+
+  checkMonthNumber(number: number) {
+    if (number < 10) return "0" + number;
+    else return number;
   }
 }

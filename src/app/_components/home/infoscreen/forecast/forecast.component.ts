@@ -5,18 +5,25 @@ import { CommonModule } from "@angular/common";
   selector: "app-forecast",
   templateUrl: "./forecast.component.html",
   styleUrls: ["./forecast.component.scss"],
-  standalone: true,
-  imports: [CommonModule],
 })
 export class ForecastComponent implements OnInit {
   @Input("currentData") public data!: any;
 
-  ngOnInit() {
-    this.initModule();
-  }
-  initModule() {}
+  weekdays: Array<string> = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
 
-  getWeekday(date: string): string {
-    return "Monday";
+  ngOnInit() {
+    this.data.forEach((elem: any) => {
+      const getDate = elem.date.replace(/-/g, ", ");
+      const weekIndex = new Date(getDate).getDay() - 1;
+      elem.weekday = this.weekdays[weekIndex];
+    });
   }
 }
