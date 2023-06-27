@@ -2,14 +2,13 @@
 <form [formGroup]="searchCityForm" (ngSubmit)="saveNewCity()">
     <mat-form-field>
         <mat-label>Add City</mat-label>
-        <input type="text" matInput formControlName="cityname"
-               placeholder="Ex. Berlin" #inputCityField>
+        <input type="text" matInput formControlName="cityname" placeholder="Ex. Berlin" #inputCityField>
         <mat-error *ngIf="(searchCityForm.invalid && !searchCityForm.dirty)">
             City not found (min. 3 letters)
         </mat-error>
     </mat-form-field>
     <button mat-icon-button type="submit"
-            [disabled]="(searchCityForm.invalid && !searchCityForm.dirty || searchCityForm.invalid)">
+        [disabled]="(searchCityForm.invalid && !searchCityForm.dirty || searchCityForm.invalid)">
         <mat-icon>chevron_right</mat-icon>
     </button>
 </form>
